@@ -1,6 +1,8 @@
 var app = require('app')
 var meow = require('meow')
 var fs = require('fs')
+var path = require('path')
+var url = require('url')
 var BrowserWindow = require('browser-window')
 
 app.on('ready', appReady)
@@ -26,12 +28,17 @@ function appReady () {
 
   var win = new BrowserWindow({ width: 0, height: 0, show: false })
   win.on('closed', function () { win = null })
-  win.loadUrl(cli.input[0] || './index.html')
+
+  var indexUrl = url.format({
+    protocol: 'file',
+    pathname: cli.input[0],
+    slashes: true
+  })
+
+  win.loadUrl(indexUrl)
 
   win.webContents.on('did-finish-load', function () {
-    win.printToPDF({
-      landscape: true
-    }, function (err, data) {
+    win.printToPDF({}, function (err, data) {
       if (err) {
         console.error(err)
       }
