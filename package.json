@@ -1,6 +1,6 @@
 {
   "name": "electron-pdf",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "description": "Generate pdf with electron",
   "main": "index.js",
   "scripts": {
@@ -29,6 +29,7 @@
   },
   "dependencies": {
     "meow": "^3.3.0",
+    "object-assign": "^3.0.0",
     "which": "^1.1.1"
   }
 }

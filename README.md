@@ -29,9 +29,31 @@ You should probably just install `electron-prebuilt` as it simplifies things.
 
 ```
 
-Usage: electron-pdf <input> <output>
+  Generate pdf with electron
 
-  Options:
+  Options
+    --help                     Show this help
+    --version                  Current version of package
+    -i | --input               String - The path to the HTML file or url
+    -o | --output              String - The path of the output PDF
+    -b | --printBackground     Boolean - Whether to print CSS backgrounds.
+                                 false - default
+    -s | --printSelectionOnly  Boolean - Whether to print selection only
+                                 false - default
+    -l | --landscape           Boolean - true for landscape, false for portrait.
+                                 false - default
+    -m | --marginType          Integer - Specify the type of margins to use
+                                 0 - default
+                                 1 - none
+                                 2 - minimum
+
+  Usage
+    $ electron-pdf <input> <output>
+    $ electron-pdf <input> <output> -l
+
+  Examples
+    $ electron-pdf http://fraserxu.me ~/Desktop/fraserxu.pdf
+    $ electron-pdf http://fraserxu.me ~/Desktop/fraserxu.pdf -l
 
 ```
 
