@@ -3,6 +3,9 @@ electron-pdf
 
 Generate pdf with electron
 
+![electron-pdf](https://cloud.githubusercontent.com/assets/1183541/9372796/6dc1089e-4715-11e5-8850-10dd9542aff8.gif)
+
+
 Install
 -------
 
