@@ -62,7 +62,7 @@ You should probably just install `electron-prebuilt` as it simplifies things.
 
 ```
 
-Inspired by [electronm-mocha](https://github.com/jprichardson/electron-mocha)
+Inspired by [electron-mocha](https://github.com/jprichardson/electron-mocha)
 
 ### License
 
