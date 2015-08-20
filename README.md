@@ -1,7 +1,9 @@
 electron-pdf
 ============
 
-Generate pdf with electron
+[![Build Status](https://travis-ci.org/fraserxu/electron-pdf.svg)](https://travis-ci.org/fraserxu/electron-pdf)
+
+Generate PDF from URL or HTML with [electron](http://electron.atom.io/)
 
 ![electron-pdf](https://cloud.githubusercontent.com/assets/1183541/9372796/6dc1089e-4715-11e5-8850-10dd9542aff8.gif)
 
