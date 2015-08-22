@@ -3,7 +3,7 @@ electron-pdf
 
 [![Build Status](https://travis-ci.org/fraserxu/electron-pdf.svg)](https://travis-ci.org/fraserxu/electron-pdf)
 
-Generate PDF from URL or HTML with [electron](http://electron.atom.io/).
+A command line tool to generate PDF from URL, HTML or Markdown files with [electron](http://electron.atom.io/).
 
 I have a blog post explain why [PDF Generation On The Web](https://fraserxu.me/2015/08/20/pdf-generation-on-the-web/)
 
@@ -36,7 +36,7 @@ You should probably just install `electron-prebuilt` as it simplifies things.
 
 ```
 
-  Generate pdf with electron
+  A command line tool to generate PDF from URL, HTML or Markdown files
 
   Options
     --help                     Show this help
@@ -60,7 +60,8 @@ You should probably just install `electron-prebuilt` as it simplifies things.
 
   Examples
     $ electron-pdf http://fraserxu.me ~/Desktop/fraserxu.pdf
-    $ electron-pdf http://fraserxu.me ~/Desktop/fraserxu.pdf -l
+    $ electron-pdf ./index.html ~/Desktop/index.pdf
+    $ electron-pdf ./README.md ~/Desktop/README.pdf -l
 
 ```
 

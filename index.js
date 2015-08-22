@@ -1,9 +1,11 @@
 var app = require('app')
 var meow = require('meow')
 var fs = require('fs')
+var path = require('path')
 var BrowserWindow = require('browser-window')
 
 var wargs = require('./lib/args')
+var markdownToHTMLPath = require('./lib/markdown')
 
 app.on('ready', appReady)
 
@@ -38,7 +40,8 @@ var cli = meow({
     '',
     'Examples',
     '  $ electron-pdf http://fraserxu.me ~/Desktop/fraserxu.pdf',
-    '  $ electron-pdf http://fraserxu.me ~/Desktop/fraserxu.pdf -l',
+    '  $ electron-pdf ./index.html ~/Desktop/index.pdf',
+    '  $ electron-pdf ./README.md ~/Desktop/README.pdf -l',
     ''
   ].join('\n')
 })
@@ -51,11 +54,36 @@ function appReady () {
     app.quit()
   }
 
+  function isMarkdown (input) {
+    var ext = path.extname(input)
+    return ext.indexOf('md') > 0 || ext.indexOf('markdown') > 0
+  }
+
+  if (isMarkdown(input)) {
+    // if given a markdown, render it into HTML and return the path of the HTML
+    input = markdownToHTMLPath(input, function (err, tmpHTMLPath) {
+      if (err) {
+        console.error('Parse markdown file error', err)
+        app.quit()
+      }
+
+      var indexUrl = wargs.urlWithArgs(tmpHTMLPath, {})
+      render(indexUrl, output)
+    })
+  } else {
+    var indexUrl = wargs.urlWithArgs(input, {})
+    render(indexUrl, output)
+  }
+
+}
+
+/**
+ * render file to pdf
+ * @param  {String} indexUrl The path to the HTML or url
+ */
+function render (indexUrl, output) {
   var win = new BrowserWindow({ width: 0, height: 0, show: false })
   win.on('closed', function () { win = null })
-
-  var indexUrl = wargs.urlWithArgs(input, {})
-
   win.loadUrl(indexUrl)
 
   // print to pdf args
@@ -72,7 +100,7 @@ function appReady () {
         console.error(err)
       }
 
-      fs.writeFile(output, data, function (err) {
+      fs.writeFile(path.resolve(output), data, function (err) {
         if (err) {
           console.error(err)
         }
