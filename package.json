@@ -1,6 +1,6 @@
 {
   "name": "electron-pdf",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "A command line tool to generate PDF from URL, HTML or Markdown files",
   "main": "index.js",
   "scripts": {
@@ -28,6 +28,8 @@
     "standard": "^5.1.0"
   },
   "dependencies": {
+    "github-markdown-css": "^2.0.9",
+    "highlight.js": "^8.7.0",
     "marked": "^0.3.5",
     "meow": "^3.3.0",
     "object-assign": "^3.0.0",
