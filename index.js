@@ -23,6 +23,7 @@ var cli = meow({
     '  --version                  Current version of package',
     '  -i | --input               String - The path to the HTML file or url',
     '  -o | --output              String - The path of the output PDF',
+    '  -c | --css                 String - The path to custom CSS',
     '  -b | --printBackground     Boolean - Whether to print CSS backgrounds.',
     '                               false - default',
     '  -s | --printSelectionOnly  Boolean - Whether to print selection only',
@@ -49,6 +50,7 @@ var cli = meow({
 function appReady () {
   var input = cli.input[0] || cli.flags.i || cli.flags.input
   var output = cli.input[1] || cli.flags.o || cli.flags.output
+  var customCss = cli.flags.c || cli.flags.css
   if (!input || !output) {
     cli.showHelp()
     app.quit()
@@ -60,8 +62,14 @@ function appReady () {
   }
 
   if (isMarkdown(input)) {
+    var opts = {}
+
+    if (customCss) {
+      opts.customCss = customCss
+    }
+
     // if given a markdown, render it into HTML and return the path of the HTML
-    input = markdownToHTMLPath(input, function (err, tmpHTMLPath) {
+    input = markdownToHTMLPath(input, opts, function (err, tmpHTMLPath) {
       if (err) {
         console.error('Parse markdown file error', err)
         app.quit()
