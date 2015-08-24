@@ -1,7 +1,11 @@
 electron-pdf
 ============
 
-[![Build Status](https://travis-ci.org/fraserxu/electron-pdf.svg)](https://travis-ci.org/fraserxu/electron-pdf)
+[![NPM version][npm-image]][npm-url]
+[![build status][travis-image]][travis-url]
+[![Downloads][downloads-image]][downloads-url]
+[![js-standard-style][standard-image]][standard-url]
+
 
 A command line tool to generate PDF from URL, HTML or Markdown files with [electron](http://electron.atom.io/).
 
@@ -60,3 +64,12 @@ Inspired by [electron-mocha](https://github.com/jprichardson/electron-mocha)
 ### License
 
 MIT
+
+[npm-image]: https://img.shields.io/npm/v/electron-pdf.svg?style=flat-square
+[npm-url]: https://npmjs.org/package/electron-pdf
+[travis-image]: https://img.shields.io/travis/fraserxu/electron-pdf/master.svg?style=flat-square
+[travis-url]: https://travis-ci.org/fraserxu/electron-pdf
+[downloads-image]: http://img.shields.io/npm/dm/electron-pdf.svg?style=flat-square
+[downloads-url]: https://npmjs.org/package/electron-pdf
+[standard-image]: https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat-square
+[standard-url]: https://github.com/feross/standard
