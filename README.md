@@ -43,6 +43,7 @@ You should probably just install `electron-prebuilt` as it simplifies things.
     --version                  Current version of package
     -i | --input               String - The path to the HTML file or url
     -o | --output              String - The path of the output PDF
+    -c | --css                 String - The path to custom CSS
     -b | --printBackground     Boolean - Whether to print CSS backgrounds.
                                  false - default
     -s | --printSelectionOnly  Boolean - Whether to print selection only
@@ -62,6 +63,7 @@ You should probably just install `electron-prebuilt` as it simplifies things.
     $ electron-pdf http://fraserxu.me ~/Desktop/fraserxu.pdf
     $ electron-pdf ./index.html ~/Desktop/index.pdf
     $ electron-pdf ./README.md ~/Desktop/README.pdf -l
+    $ electron-pdf ./README.md ~/Desktop/README.pdf -l -c my-awesome-css.css
 
 ```
 

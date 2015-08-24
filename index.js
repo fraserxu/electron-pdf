@@ -43,6 +43,8 @@ var cli = meow({
     '  $ electron-pdf http://fraserxu.me ~/Desktop/fraserxu.pdf',
     '  $ electron-pdf ./index.html ~/Desktop/index.pdf',
     '  $ electron-pdf ./README.md ~/Desktop/README.pdf -l',
+    '  $ electron-pdf ./README.md ~/Desktop/README.pdf -l -c my-awesome-css.css',
+
     ''
   ].join('\n')
 })
