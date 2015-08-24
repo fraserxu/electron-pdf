@@ -21,7 +21,10 @@ which('electron', function (err, resolvedPath) {
 function runElectron (resolvedPath) {
   var args = process.argv.slice(2)
   args.unshift(path.resolve(path.join(__dirname, './index.js')))
-  var electron = spawn(resolvedPath, args, { stdio: ['inherit', 'inherit', 'pipe'] })
+  var electron = spawn(resolvedPath, args, {
+    stdio: ['inherit', 'inherit', 'pipe', 'ipc'],
+    cwd: path.resolve(__dirname)
+  })
   electron.stderr.on('data', function (data) {
     var str = data.toString('utf8')
     // it's Chromium, STFU
