@@ -28,7 +28,7 @@
     "standard": "^5.1.0"
   },
   "dependencies": {
-    "electron-prebuilt": "^0.30.0",
+    "electron-prebuilt": "^0.32.0",
     "github-markdown-css": "^2.0.9",
     "highlight.js": "^8.7.0",
     "marked": "^0.3.5",

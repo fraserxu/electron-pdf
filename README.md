@@ -37,7 +37,7 @@ Usage
     -o | --output              String - The path of the output PDF
     -c | --css                 String - The path to custom CSS
     -b | --printBackground     Boolean - Whether to print CSS backgrounds.
-                                 false - default
+                                 false - true
     -s | --printSelectionOnly  Boolean - Whether to print selection only
                                  false - default
     -l | --landscape           Boolean - true for landscape, false for portrait.
