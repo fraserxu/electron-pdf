@@ -84,7 +84,6 @@ function appReady () {
     var indexUrl = wargs.urlWithArgs(input, {})
     render(indexUrl, output)
   }
-
 }
 
 /**
