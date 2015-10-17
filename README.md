@@ -6,13 +6,9 @@ electron-pdf
 [![Downloads][downloads-image]][downloads-url]
 [![js-standard-style][standard-image]][standard-url]
 
-
 A command line tool to generate PDF from URL, HTML or Markdown files with [electron](http://electron.atom.io/).
 
 I have a blog post explain why [PDF Generation On The Web](https://fraserxu.me/2015/08/20/pdf-generation-on-the-web/)
-
-![electron-pdf](https://cloud.githubusercontent.com/assets/1183541/9372796/6dc1089e-4715-11e5-8850-10dd9542aff8.gif)
-
 
 Install
 -------
@@ -24,7 +20,31 @@ npm install electron-pdf -g
 Usage
 -----
 
-### Build PDF
+### To generate a PDF from a HTML file
+
+```
+$ electron-pdf index.html ~/Desktop/index.pdf
+```
+
+### To generate a PDF from a Markdown file
+
+```
+$ electron-pdf index.md ~/Desktop/index.pdf
+```
+
+### To generate a PDF from a Markdown file with custom CSS(defaut to Github markdown style)
+
+```
+$ electron-pdf index.html ~/Desktop/index.pdf -c my-awesome-css.css
+```
+
+### To generate a PDF from a URL
+
+```
+$ electron-pdf https://fraserxu.me ~/Desktop/fraserxu.pdf
+```
+
+### More
 
 ```
 
