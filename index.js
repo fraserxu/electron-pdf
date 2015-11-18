@@ -93,7 +93,7 @@ function appReady () {
 function render (indexUrl, output) {
   var win = new BrowserWindow({ width: 0, height: 0, show: false })
   win.on('closed', function () { win = null })
-  win.loadUrl(indexUrl)
+  win.loadURL(indexUrl)
 
   // print to pdf args
   var opts = {
