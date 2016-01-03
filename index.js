@@ -104,7 +104,7 @@ function render (indexUrl, output) {
   }
 
   win.webContents.on('did-finish-load', function () {
-    win.printToPDF(opts, function (err, data) {
+    win.webContents.printToPDF(opts, function (err, data) {
       if (err) {
         console.error(err)
       }
