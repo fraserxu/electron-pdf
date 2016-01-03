@@ -109,7 +109,7 @@ function render (indexUrl, output) {
         console.error(err)
       }
 
-      fs.writeFile(path.join(process.cwd(), output), data, function (err) {
+      fs.writeFile(path.resolve(output), data, function (err) {
         if (err) {
           console.error(err)
         }
