@@ -2,12 +2,29 @@ var electron = require('electron')
 var argv = require('minimist')(process.argv.slice(2))
 var fs = require('fs')
 var path = require('path')
+var pkg = require('./package.json')
 
 var app = electron.app
 var BrowserWindow = electron.BrowserWindow
 
 var wargs = require('./lib/args')
 var markdownToHTMLPath = require('./lib/markdown')
+
+var input = argv._[0] || argv.i || argv.input
+var output = argv._[1] || argv.o || argv.output
+
+if (argv.v || argv.version) {
+  console.log('v' + pkg.version)
+  return process.exit(0)
+}
+
+if (argv.h || argv.help) {
+  usage(0)
+}
+
+if (!input || !output) {
+  usage(1)
+}
 
 app.on('ready', appReady)
 
@@ -18,18 +35,7 @@ app.on('window-all-closed', function () {
 })
 
 function appReady () {
-  var input = argv._[0] || argv.i || argv.input
-  var output = argv._[1] || argv.o || argv.output
   var customCss = argv.c || argv.css
-
-  if (!input || !output) {
-    usage(0)
-    app.quit()
-  }
-
-  if (argv.h || argv.help) {
-    usage(0)
-  }
 
   function isMarkdown (input) {
     var ext = path.extname(input)
