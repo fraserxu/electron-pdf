@@ -31,6 +31,8 @@ function appReady () {
     usage(0)
   }
 
+  input = path.resolve(input)
+
   function isMarkdown (input) {
     var ext = path.extname(input)
     return ext.indexOf('md') > 0 || ext.indexOf('markdown') > 0

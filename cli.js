@@ -7,8 +7,7 @@ var electronPath = require('electron-prebuilt')
 var args = process.argv.slice(2)
 args.unshift(path.resolve(path.join(__dirname, './index.js')))
 var electron = spawn(electronPath, args, {
-  stdio: ['inherit', 'inherit', 'pipe', 'ipc'],
-  cwd: path.resolve(__dirname)
+  stdio: ['inherit', 'inherit', 'pipe', 'ipc']
 })
 electron.stderr.on('data', function (data) {
   var str = data.toString('utf8')
