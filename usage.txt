@@ -1,0 +1,28 @@
+A command line tool to generate PDF from URL, HTML or Markdown files
+
+Options
+  --help                     Show this help
+  --version                  Current version of package
+  -i | --input               String - The path to the HTML file or url
+  -o | --output              String - The path of the output PDF
+  -c | --css                 String - The path to custom CSS
+  -b | --printBackground     Boolean - Whether to print CSS backgrounds.
+                               false - true
+  -s | --printSelectionOnly  Boolean - Whether to print selection only
+                               false - default
+  -l | --landscape           Boolean - true for landscape, false for portrait.
+                               false - default
+  -m | --marginType          Integer - Specify the type of margins to use
+                               0 - default
+                               1 - none
+                               2 - minimum
+
+Usage
+  $ electron-pdf <input> <output>
+  $ electron-pdf <input> <output> -l
+
+Examples
+  $ electron-pdf http://fraserxu.me ~/Desktop/fraserxu.pdf
+  $ electron-pdf ./index.html ~/Desktop/index.pdf
+  $ electron-pdf ./README.md ~/Desktop/README.pdf -l
+  $ electron-pdf ./README.md ~/Desktop/README.pdf -l -c my-awesome-css.css
