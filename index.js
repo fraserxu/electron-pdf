@@ -15,14 +15,12 @@ var output = argv._[1] || argv.o || argv.output
 
 if (argv.v || argv.version) {
   console.log('v' + pkg.version)
-  return process.exit(0)
+  process.exit(0)
 }
 
 if (argv.h || argv.help) {
-  usage(0)
-}
-
-if (!input || !output) {
+  usage(1)
+} else if (!input || !output) {
   usage(1)
 }
 
