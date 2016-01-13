@@ -1,8 +1,10 @@
-var app = require('app')
-var meow = require('meow')
+var electron = require('electron')
+var argv = require('minimist')(process.argv.slice(2))
 var fs = require('fs')
 var path = require('path')
-var BrowserWindow = require('browser-window')
+
+var app = electron.app
+var BrowserWindow = electron.BrowserWindow
 
 var wargs = require('./lib/args')
 var markdownToHTMLPath = require('./lib/markdown')
@@ -15,47 +17,18 @@ app.on('window-all-closed', function () {
   }
 })
 
-var cli = meow({
-  pkg: './package.json',
-  help: [
-    'Options',
-    '  --help                     Show this help',
-    '  --version                  Current version of package',
-    '  -i | --input               String - The path to the HTML file or url',
-    '  -o | --output              String - The path of the output PDF',
-    '  -c | --css                 String - The path to custom CSS',
-    '  -b | --printBackground     Boolean - Whether to print CSS backgrounds.',
-    '                               false - default',
-    '  -s | --printSelectionOnly  Boolean - Whether to print selection only',
-    '                               false - default',
-    '  -l | --landscape           Boolean - true for landscape, false for portrait.',
-    '                               false - default',
-    '  -m | --marginType          Integer - Specify the type of margins to use',
-    '                               0 - default',
-    '                               1 - none',
-    '                               2 - minimum',
-    '',
-    'Usage',
-    '  $ electron-pdf <input> <output>',
-    '  $ electron-pdf <input> <output> -l',
-    '',
-    'Examples',
-    '  $ electron-pdf http://fraserxu.me ~/Desktop/fraserxu.pdf',
-    '  $ electron-pdf ./index.html ~/Desktop/index.pdf',
-    '  $ electron-pdf ./README.md ~/Desktop/README.pdf -l',
-    '  $ electron-pdf ./README.md ~/Desktop/README.pdf -l -c my-awesome-css.css',
-
-    ''
-  ].join('\n')
-})
-
 function appReady () {
-  var input = cli.input[0] || cli.flags.i || cli.flags.input
-  var output = cli.input[1] || cli.flags.o || cli.flags.output
-  var customCss = cli.flags.c || cli.flags.css
+  var input = argv._[0] || argv.i || argv.input
+  var output = argv._[1] || argv.o || argv.output
+  var customCss = argv.c || argv.css
+
   if (!input || !output) {
-    cli.showHelp()
+    usage(0)
     app.quit()
+  }
+
+  if (argv.h || argv.help) {
+    usage(0)
   }
 
   function isMarkdown (input) {
@@ -97,10 +70,10 @@ function render (indexUrl, output) {
 
   // print to pdf args
   var opts = {
-    marginType: cli.flags.m || cli.flags.marginType || 0,
-    printBackground: cli.flags.p || cli.flags.printBackground || true,
-    printSelectionOnly: cli.flags.s || cli.flags.printSelectionOnly || false,
-    landscape: cli.flags.l || cli.flags.landscape || false
+    marginType: argv.m || argv.marginType || 0,
+    printBackground: argv.p || argv.printBackground || true,
+    printSelectionOnly: argv.s || argv.printSelectionOnly || false,
+    landscape: argv.l || argv.landscape || false
   }
 
   win.webContents.on('did-finish-load', function () {
@@ -116,5 +89,13 @@ function render (indexUrl, output) {
         app.quit()
       })
     })
+  })
+}
+
+function usage(code) {
+  var rs = fs.createReadStream(__dirname + '/usage.txt')
+  rs.pipe(process.stdout)
+  rs.on('close', function() {
+    if (code) process.exit(code)
   })
 }
