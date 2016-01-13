@@ -94,10 +94,10 @@ function render (indexUrl, output) {
   })
 }
 
-function usage(code) {
+function usage (code) {
   var rs = fs.createReadStream(__dirname + '/usage.txt')
   rs.pipe(process.stdout)
-  rs.on('close', function() {
+  rs.on('close', function () {
     if (code) process.exit(code)
   })
 }
