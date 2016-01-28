@@ -19,6 +19,17 @@ Install
 npm install electron-pdf -g
 ```
 
+For gnu/linux installations without a graphical environment:
+
+```bash
+$ sudo apt-get install xvfb # or equivalent
+$ export DISPLAY=':99.0'
+$ Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
+$ electron-pdf ...
+```
+
+There is also an example docker machine [here](https://github.com/fraserxu/docker-tape-run).
+
 Usage
 -----
 
