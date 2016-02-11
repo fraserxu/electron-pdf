@@ -79,6 +79,7 @@ $ electron-pdf https://fraserxu.me ~/Desktop/fraserxu.pdf
                                  0 - default
                                  1 - none
                                  2 - minimum
+    -d | --disableCache        Disable HTTP caching
 
   Usage
     $ electron-pdf <input> <output>
