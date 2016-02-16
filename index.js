@@ -70,7 +70,12 @@ function appReady () {
 function render (indexUrl, output) {
   var win = new BrowserWindow({ width: 0, height: 0, show: false })
   win.on('closed', function () { win = null })
-  win.loadURL(indexUrl)
+
+  var loadOpts = {}
+  if (argv.d || argv.disableCache) {
+    loadOpts.extraHeaders = 'pragma: no-cache\n'
+  }
+  win.loadURL(indexUrl, loadOpts)
 
   // print to pdf args
   var opts = {
