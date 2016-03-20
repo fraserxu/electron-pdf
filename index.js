@@ -55,11 +55,17 @@ function appReady () {
       }
 
       var indexUrl = wargs.urlWithArgs(tmpHTMLPath, {})
-      render(indexUrl, output)
+      render(indexUrl, output, function (err) {
+        if (err) { console.error(err) }
+        app.quit()
+      })
     })
   } else {
     var indexUrl = wargs.urlWithArgs(input, {})
-    render(indexUrl, output)
+    render(indexUrl, output, function (err) {
+      if (err) { console.error(err) }
+      app.quit()
+    })
   }
 }
 
@@ -67,7 +73,7 @@ function appReady () {
  * render file to pdf
  * @param  {String} indexUrl The path to the HTML or url
  */
-function render (indexUrl, output) {
+function render (indexUrl, output, cb) {
   var win = new BrowserWindow({ width: 0, height: 0, show: false })
   win.on('closed', function () { win = null })
 
@@ -88,15 +94,10 @@ function render (indexUrl, output) {
   win.webContents.on('did-finish-load', function () {
     win.webContents.printToPDF(opts, function (err, data) {
       if (err) {
-        console.error(err)
+        return cb(err)
       }
 
-      fs.writeFile(path.resolve(output), data, function (err) {
-        if (err) {
-          console.error(err)
-        }
-        app.quit()
-      })
+      fs.writeFile(path.resolve(output), data, cb)
     })
   })
 }
