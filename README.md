@@ -80,6 +80,7 @@ $ electron-pdf https://fraserxu.me ~/Desktop/fraserxu.pdf
                                  1 - none
                                  2 - minimum
     -d | --disableCache        Disable HTTP caching
+    -w | --outputWait          Integer – Time to wait (in MS) between page load and PDF creation
 
   Usage
     $ electron-pdf <input> <output>
