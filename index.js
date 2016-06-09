@@ -79,7 +79,7 @@ function render (indexUrl, output) {
 
   // print to pdf args
   var opts = {
-    marginType: argv.m || argv.marginType || 0,
+    marginsType: argv.m || argv.marginsType || 0,
     printBackground: argv.p || argv.printBackground || true,
     printSelectionOnly: argv.s || argv.printSelectionOnly || false,
     landscape: argv.l || argv.landscape || false
