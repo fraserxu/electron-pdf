@@ -75,14 +75,14 @@ function render (indexUrl, output) {
   if (argv.d || argv.disableCache) {
     loadOpts.extraHeaders = 'pragma: no-cache\n'
   }
-  win.loadURL(indexUrl, loadOpts);
+  win.loadURL(indexUrl, loadOpts)
 
   var opts = {
     marginType: parseInt(argv.m || argv.marginType, 10) || 0,
     landscape: argv.l || argv.landscape || false,
     printBackground: true,
     pageSize: 'A4'
-  };
+  }
 
   // print to pdf args
   if (argv.b !== undefined) {
