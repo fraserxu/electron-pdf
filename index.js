@@ -86,16 +86,16 @@ function render (indexUrl, output) {
 
   // print to pdf args
   if (argv.b !== undefined) {
-    opts.printBackground = (['1', 'true', 'TRUE'].indexOf(argv.b) >= 0);
+    opts.printBackground = (['1', 'true', 'TRUE'].indexOf(argv.b) >= 0)
   }
   if (argv.printBackground !== undefined) {
-    opts.printBackground = (['1', 'true', 'TRUE'].indexOf(argv.printBackground) >= 0);
+    opts.printBackground = (['1', 'true', 'TRUE'].indexOf(argv.printBackground) >= 0)
   }
 
   if (argv.p || argv.pageSize) {
-    pageSize = (argv.p || argv.pageSize)
+    opts.pageSize = (argv.p || argv.pageSize)
     try {
-      pageSize = JSON.parse(pageSize);
+      opts.pageSize = JSON.parse(pageSize)
     } catch (e) { }
   }
 
