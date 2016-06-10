@@ -75,15 +75,28 @@ function render (indexUrl, output) {
   if (argv.d || argv.disableCache) {
     loadOpts.extraHeaders = 'pragma: no-cache\n'
   }
-  win.loadURL(indexUrl, loadOpts)
+  win.loadURL(indexUrl, loadOpts);
+
+  var opts = {
+    marginType: parseInt(argv.m || argv.marginType, 10) || 0,
+    landscape: argv.l || argv.landscape || false,
+    printBackground: true,
+    pageSize: 'A4'
+  };
 
   // print to pdf args
-  var opts = {
-    marginType: argv.m || argv.marginType || 0,
-    printBackground: argv.b || argv.printBackground || true,
-    printSelectionOnly: argv.s || argv.printSelectionOnly || false,
-    pageSize: argv.p || argv.pageSize || 'A4',
-    landscape: argv.l || argv.landscape || false
+  if (argv.b !== undefined) {
+    opts.printBackground = (['1', 'true', 'TRUE'].indexOf(argv.b) >= 0);
+  }
+  if (argv.printBackground !== undefined) {
+    opts.printBackground = (['1', 'true', 'TRUE'].indexOf(argv.printBackground) >= 0);
+  }
+
+  if (argv.p || argv.pageSize) {
+    pageSize = (argv.p || argv.pageSize)
+    try {
+      pageSize = JSON.parse(pageSize);
+    } catch (e) { }
   }
 
   win.webContents.on('did-finish-load', function () {

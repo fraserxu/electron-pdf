@@ -71,8 +71,6 @@ $ electron-pdf https://fraserxu.me ~/Desktop/fraserxu.pdf
     -c | --css                 String - The path to custom CSS
     -b | --printBackground     Boolean - Whether to print CSS backgrounds.
                                  false - true
-    -s | --printSelectionOnly  Boolean - Whether to print selection only
-                                 false - default
     -p | --pageSize            String - Can be A3, A4, A5, Legal, Letter, Tabloid or an Object containing height and width in microns
                                 "A4" - default
     -l | --landscape           Boolean - true for landscape, false for portrait.
