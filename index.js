@@ -80,8 +80,9 @@ function render (indexUrl, output) {
   // print to pdf args
   var opts = {
     marginType: argv.m || argv.marginType || 0,
-    printBackground: argv.p || argv.printBackground || true,
+    printBackground: argv.b || argv.printBackground || true,
     printSelectionOnly: argv.s || argv.printSelectionOnly || false,
+    pageSize: argv.p || argv.pageSize || 'A4',
     landscape: argv.l || argv.landscape || false
   }
 
