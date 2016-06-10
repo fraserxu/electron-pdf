@@ -95,7 +95,7 @@ function render (indexUrl, output) {
   if (argv.p || argv.pageSize) {
     opts.pageSize = (argv.p || argv.pageSize)
     try {
-      opts.pageSize = JSON.parse(pageSize)
+      opts.pageSize = JSON.parse(opts.pageSize)
     } catch (e) { }
   }
 
