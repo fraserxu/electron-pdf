@@ -84,7 +84,7 @@ function render (indexUrl, output) {
     printSelectionOnly: argv.s || argv.printSelectionOnly || false,
     pageSize: argv.p || argv.pageSize || 'A4',
     landscape: argv.l || argv.landscape || false
-  };
+  }
 
   win.webContents.on('did-finish-load', function () {
     win.webContents.printToPDF(opts, function (err, data) {
