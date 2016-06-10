@@ -77,13 +77,26 @@ function render (indexUrl, output) {
   }
   win.loadURL(indexUrl, loadOpts)
 
-  // print to pdf args
   var opts = {
-    marginType: argv.m || argv.marginType || 0,
-    printBackground: argv.b || argv.printBackground || true,
-    printSelectionOnly: argv.s || argv.printSelectionOnly || false,
-    pageSize: argv.p || argv.pageSize || 'A4',
-    landscape: argv.l || argv.landscape || false
+    marginType: parseInt(argv.m || argv.marginType, 10) || 0,
+    landscape: argv.l || argv.landscape || false,
+    printBackground: true,
+    pageSize: 'A4'
+  }
+
+  // print to pdf args
+  if (argv.b !== undefined) {
+    opts.printBackground = (['1', 'true', 'TRUE'].indexOf(argv.b) >= 0)
+  }
+  if (argv.printBackground !== undefined) {
+    opts.printBackground = (['1', 'true', 'TRUE'].indexOf(argv.printBackground) >= 0)
+  }
+
+  if (argv.p || argv.pageSize) {
+    opts.pageSize = (argv.p || argv.pageSize)
+    try {
+      opts.pageSize = JSON.parse(opts.pageSize)
+    } catch (e) { }
   }
 
   win.webContents.on('did-finish-load', function () {
