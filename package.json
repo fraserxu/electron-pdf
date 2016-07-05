@@ -30,7 +30,7 @@
   "dependencies": {
     "electron-prebuilt": "^1.2.2",
     "github-markdown-css": "^2.0.9",
-    "highlight.js": "^9.0.0",
+    "highlight.js": "^9.2.0",
     "marked": "^0.3.5",
     "minimist": "^1.2.0",
     "object-assign": "^4.0.1",
