@@ -77,7 +77,7 @@ $ electron-pdf https://fraserxu.me ~/Desktop/fraserxu.pdf
                                 "A4" - default
     -l | --landscape           Boolean - true for landscape, false for portrait.
                                  false - default
-    -m | --marginType          Integer - Specify the type of margins to use
+    -m | --marginsType          Integer - Specify the type of margins to use
                                  0 - default
                                  1 - none
                                  2 - minimum
