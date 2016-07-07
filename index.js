@@ -68,7 +68,7 @@ function appReady () {
  * @param  {String} indexUrl The path to the HTML or url
  */
 function render (indexUrl, output) {
-  var win = new BrowserWindow({ width: 0, height: 0, show: false })
+  var win = new BrowserWindow({ width: 0, height: 0, show: false, webPreferences: {experimentalFeatures: true} })
   win.on('closed', function () { win = null })
 
   var loadOpts = {}
