@@ -68,6 +68,7 @@ function appReady () {
  * @param  {String} indexUrl The path to the HTML or url
  */
 function render (indexUrl, output) {
+  var wait = argv.w || argv.outputWait || 0
   var win = new BrowserWindow({ width: 0, height: 0, show: false })
   win.on('closed', function () { win = null })
 
@@ -87,18 +88,21 @@ function render (indexUrl, output) {
   }
 
   win.webContents.on('did-finish-load', function () {
-    win.webContents.printToPDF(opts, function (err, data) {
-      if (err) {
-        console.error(err)
-      }
 
-      fs.writeFile(path.resolve(output), data, function (err) {
+    setTimeout(function(){ 
+      win.webContents.printToPDF(opts, function (err, data) {
         if (err) {
           console.error(err)
         }
-        app.quit()
+
+        fs.writeFile(path.resolve(output), data, function (err) {
+          if (err) {
+            console.error(err)
+          }
+          app.quit()
+        })
       })
-    })
+    }, wait);
   })
 }
 
