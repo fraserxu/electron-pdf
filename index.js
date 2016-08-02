@@ -101,8 +101,8 @@ function render (indexUrl, output) {
           app.quit()
         })
       })
-    })
-  }, wait)
+    }, wait)
+  })
 }
 
 function usage (code) {
