@@ -57,6 +57,19 @@ $ electron-pdf index.html ~/Desktop/index.pdf -c my-awesome-css.css
 $ electron-pdf https://fraserxu.me ~/Desktop/fraserxu.pdf
 ```
 
+### To generate a PDF after the an async task in the HTML
+
+```
+electron-pdf ./index.html ~/Desktop/README.pdf -e READY_TO_RENDER
+```
+In an index.html `<script>` tag
+
+```javascript
+setTimeout(function () {
+  require('electron').ipcRenderer.send('READY_TO_RENDER');
+}, 300);
+```
+
 ### More
 
 ```
@@ -83,6 +96,7 @@ $ electron-pdf https://fraserxu.me ~/Desktop/fraserxu.pdf
                                  2 - minimum
     -d | --disableCache        Disable HTTP caching
     -w | --outputWait          Integer – Time to wait (in MS) between page load and PDF creation
+    -e | --waitForJSEvent     String - The name of the event to wait before PDF creation
 
   Usage
     $ electron-pdf <input> <output>
@@ -93,6 +107,7 @@ $ electron-pdf https://fraserxu.me ~/Desktop/fraserxu.pdf
     $ electron-pdf ./index.html ~/Desktop/index.pdf
     $ electron-pdf ./README.md ~/Desktop/README.pdf -l
     $ electron-pdf ./README.md ~/Desktop/README.pdf -l -c my-awesome-css.css
+    $ electron-pdf ./index.html ~/Desktop/README.pdf -e READY_TO_RENDER
 
 ```
 

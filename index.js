@@ -6,6 +6,7 @@ var pkg = require('./package.json')
 
 var app = electron.app
 var BrowserWindow = electron.BrowserWindow
+var ipc = electron.ipcMain;
 
 var wargs = require('./lib/args')
 var markdownToHTMLPath = require('./lib/markdown')
@@ -87,20 +88,32 @@ function render (indexUrl, output) {
     landscape: argv.l || argv.landscape || false
   }
 
-  win.webContents.on('did-finish-load', function () {
-    setTimeout(function () {
-      win.webContents.printToPDF(opts, function (err, data) {
-        if (err) {
-          console.error(err)
-        }
+  var waitForJSEvent = argv.e || argv.waitForJSEvent || false;
 
+  var realRender = function (win, opts) {
+    win.webContents.printToPDF(opts, function (err, data) {
+      if (err) {
+        console.error(err)
+      } else {
         fs.writeFile(path.resolve(output), data, function (err) {
           if (err) {
             console.error(err)
           }
           app.quit()
-        })
-      })
+        });
+      }
+    });
+  }
+
+  win.webContents.on('did-finish-load', function () {
+    setTimeout(function () { 
+      if (!!waitForJSEvent) {
+        ipc.on(waitForJSEvent, function () {
+          realRender(win, opts) 
+        });
+      } else {
+        realRender(win, opts) 
+      }
     }, wait)
   })
 }
