@@ -21,6 +21,10 @@ Options
   -d | --disableCache        Disable HTTP caching
   -w | --outputWait          Integer – Time to wait (in MS) between page load and PDF creation
                                0 - default
+  -x | --windowX             Integer – width of browser window in pixels
+                               0 - default
+  -y | --windowY             Integer – height of browser window in pixels
+                               0 - default
 
 Usage
   $ electron-pdf <input> <output>

@@ -69,7 +69,15 @@ function appReady () {
  */
 function render (indexUrl, output) {
   var wait = argv.w || argv.outputWait || 0
-  var win = new BrowserWindow({ width: 0, height: 0, show: false })
+  var winX = argv.x || argv.windowX || 0
+  var winY = argv.y || argv.windowY || 0
+
+  var win = new BrowserWindow({
+    width: winX,
+    height: winY,
+    show: false
+  })
+
   win.on('closed', function () { win = null })
 
   var loadOpts = {}
