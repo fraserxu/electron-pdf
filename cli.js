@@ -1,13 +1,11 @@
 #!/usr/bin/env node
-
 var path = require('path')
 var spawn = require('child_process').spawn
 var electronPath = require('electron-prebuilt')
 
-
 var args = process.argv.slice(2)
 
-args.unshift(path.resolve(path.join(__dirname, './index.js')))
+args.unshift(path.resolve(path.join(__dirname, './charge.js')))
 
 var electron = spawn(electronPath, args, {
   //       stdin,     stdout,    stderr
