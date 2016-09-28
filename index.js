@@ -1,5 +1,5 @@
 var electron = require('electron')
-var argv = require('minimist')(process.argv.slice(2))
+var parseArgs = require('minimist')
 var fs = require('fs')
 var path = require('path')
 var pkg = require('./package.json')
@@ -10,30 +10,61 @@ var BrowserWindow = electron.BrowserWindow
 var wargs = require('./lib/args')
 var markdownToHTMLPath = require('./lib/markdown')
 
-var input = argv._[0] || argv.i || argv.input
-var output = argv._[1] || argv.o || argv.output
+var HTML_DPI = 96
 
-if (argv.v || argv.version) {
+var argOptions = {
+  booleans: ['printBackground','landscape','printSelectionOnly'],
+  alias: {
+    'input': 'i',
+    'output': 'o',
+    'css': 'c',
+    'disableCache': 'd',
+    'help' : 'h',
+    'landscape': 'l',
+    'marginsType': ['m', 'marginType'],
+    'outputWait': 'w',
+    'pageSize': 'p',
+    'printBackground': 'b',
+    'printSelectionOnly': 's',
+    'version': 'v',
+    'windowX': 'x',
+    'windowY': 'y'
+  },
+  default: {
+    'landscape': false,
+    'marginsType': 1,
+    'outputWait': 0,
+    'pageSize': 'A4',
+    'printBackground': true,
+    'printSelectionOnly': false
+  }
+}
+//TODO: Generate Usage Doc from argv options
+var argv = parseArgs(process.argv.slice(2), argOptions)
+
+var input = argv._[0] || argv.input
+var output = argv._[1] || argv.output
+
+if (argv.version) {
   console.log('v' + pkg.version)
   process.exit(0)
 }
 
-if (argv.h || argv.help) {
-  usage(1)
-} else if (!input || !output) {
+if (argv.help || !input || !output) {
   usage(1)
 }
+else {
+  app.on('ready', appReady)
+  app.on('window-all-closed', function () {
+    if (process.platform !== 'darwin') {
+      app.quit()
+    }
+  })
+}
 
-app.on('ready', appReady)
-
-app.on('window-all-closed', function () {
-  if (process.platform !== 'darwin') {
-    app.quit()
-  }
-})
 
 function appReady () {
-  var customCss = argv.c || argv.css
+  var customCss = argv.css
 
   function isMarkdown (input) {
     var ext = path.extname(input)
@@ -69,27 +100,26 @@ function appReady () {
  */
 function render (indexUrl, output) {
 
-  var wait = argv.w || argv.outputWait || 0
+  var png = output.toLowerCase().endsWith('.png')
 
   var pdfOptions = {
-    marginsType: argv.m || argv.marginsType || argv.marginType || 1,
-    printBackground: argv.b || argv.printBackground || true,
-    printSelectionOnly: argv.s || argv.printSelectionOnly || false,
-    pageSize: argv.p || argv.pageSize || 'A4',
-    landscape: argv.l || argv.landscape || false,
+    marginsType: argv.marginsType,
+    printBackground: argv.printBackground,
+    printSelectionOnly: argv.printSelectionOnly,
+    pageSize: argv.pageSize,
+    landscape: argv.landscape,
   }
 
-  var DPI = 96 //72
   var pageDimensions = {
     'A4': {x: 595, y: 842},
-    'Letter': {x: 8.5 * DPI, y: 11 * DPI},
-    'Legal': {x: 8.5 * DPI, y: 14 * DPI}
+    'Letter': {x: 8.5 * HTML_DPI, y: 11 * HTML_DPI},
+    'Legal': {x: 8.5 * HTML_DPI, y: 14 * HTML_DPI}
   }
 
   var pageDim = pageDimensions[pdfOptions.pageSize]
   pageDim = pdfOptions.landscape ? {x: pageDim.y, y: pageDim.x} : pageDim
-  var winX = argv.x || argv.windowX || pageDim.x
-  var winY = argv.y || argv.windowY || pageDim.y
+  var winX = argv.windowX || pageDim.x
+  var winY = argv.windowY || pageDim.y
 
   console.info('Opening a browser window', winX, 'x', winY)
   var win = new BrowserWindow({
@@ -107,28 +137,44 @@ function render (indexUrl, output) {
   win.on('closed', function () { win = null })
 
   var loadOpts = {}
-  if (argv.d || argv.disableCache) {
+  if (argv.disableCache) {
     loadOpts.extraHeaders = 'pragma: no-cache\n'
   }
   win.loadURL(indexUrl, loadOpts)
 
   win.webContents.on('did-finish-load', function () {
     setTimeout(function () {
-      win.webContents.printToPDF(pdfOptions, function (err, data) {
-        if (err) {
-          console.error(err)
-        }
+      console.log('finished loading')
 
-        var target = path.resolve(output)
-        console.log('writing to:', target)
-        fs.writeFile(target, data, function (err) {
+      //Image (PNG)
+      if( png ){
+        win.capturePage(function(image){
+          var target = path.resolve(output)
+          fs.writeFile(target, image.toPNG(), function (err) {
+            if (err) {
+              console.error(err)
+            }
+            app.quit()
+          })
+        })
+      }
+      //PDF
+      else {
+        win.webContents.printToPDF(pdfOptions, function (err, data) {
           if (err) {
             console.error(err)
           }
-          app.quit()
+          var target = path.resolve(output)
+          console.log('writing to:', target)
+          fs.writeFile(target, data, function (err) {
+            if (err) {
+              console.error(err)
+            }
+            app.quit()
+          })
         })
-      })
-    }, wait)
+      }
+    }, argv.outputWait)
   })
 }
 
