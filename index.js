@@ -1,8 +1,5 @@
 var fs = require('fs')
 var path = require('path')
-var pkg = require('./package.json')
-
-var parseArgs = require('minimist')
 
 var electron = require('electron')
 var app = electron.app
@@ -13,8 +10,7 @@ var markdownToHTMLPath = require('./lib/markdown')
 
 var HTML_DPI = 96
 
-var PDFExporter = function(input, output, argv){
-
+var PDFExporter = function (input, output, argv) {
   app.on('ready', appReady)
   app.on('window-all-closed', function () {
     if (process.platform !== 'darwin') {
@@ -37,7 +33,8 @@ var PDFExporter = function(input, output, argv){
         opts.customCss = customCss
       }
 
-      // if given a markdown, render it into HTML and return the path of the HTML
+      // if given a markdown, render it into HTML and return the path of the
+      // HTML
       input = markdownToHTMLPath(input, opts, function (err, tmpHTMLPath) {
         if (err) {
           console.error('Parse markdown file error', err)
@@ -58,7 +55,6 @@ var PDFExporter = function(input, output, argv){
    * @param  {String} indexUrl The path to the HTML or url
    */
   function render (indexUrl, output) {
-
     var png = output.toLowerCase().endsWith('.png')
 
     var pdfOptions = {
@@ -66,7 +62,7 @@ var PDFExporter = function(input, output, argv){
       printBackground: argv.printBackground,
       printSelectionOnly: argv.printSelectionOnly,
       pageSize: argv.pageSize,
-      landscape: argv.landscape,
+      landscape: argv.landscape
     }
 
     var pageDimensions = {
@@ -84,7 +80,7 @@ var PDFExporter = function(input, output, argv){
     var win = new BrowserWindow({
       width: winX,
       height: winY,
-      x: 0, y:0,
+      x: 0, y: 0,
       show: true,
       enableLargerThanScreen: true,
       webPreferences: {
@@ -93,7 +89,9 @@ var PDFExporter = function(input, output, argv){
       }
     })
 
-    win.on('closed', function () { win = null })
+    win.on('closed', function () {
+      win = null
+    })
 
     var loadOpts = {}
     if (argv.disableCache) {
@@ -105,9 +103,9 @@ var PDFExporter = function(input, output, argv){
       setTimeout(function () {
         console.log('finished loading')
 
-        //Image (PNG)
-        if( png ){
-          win.capturePage(function(image){
+        //  Image (PNG)
+        if (png) {
+          win.capturePage(function (image) {
             var target = path.resolve(output)
             fs.writeFile(target, image.toPNG(), function (err) {
               if (err) {
@@ -116,9 +114,7 @@ var PDFExporter = function(input, output, argv){
               app.quit()
             })
           })
-        }
-        //PDF
-        else {
+        } else { //  PDF
           win.webContents.printToPDF(pdfOptions, function (err, data) {
             if (err) {
               console.error(err)
@@ -136,7 +132,6 @@ var PDFExporter = function(input, output, argv){
       }, argv.outputWait)
     })
   }
-
 }
 
 module.exports = PDFExporter
