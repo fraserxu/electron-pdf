@@ -68,14 +68,40 @@ function appReady () {
  * @param  {String} indexUrl The path to the HTML or url
  */
 function render (indexUrl, output) {
-  var wait = argv.w || argv.outputWait || 0
-  var winX = argv.x || argv.windowX || 0
-  var winY = argv.y || argv.windowY || 0
 
+  var wait = argv.w || argv.outputWait || 0
+
+  var pdfOptions = {
+    marginsType: argv.m || argv.marginsType || argv.marginType || 1,
+    printBackground: argv.b || argv.printBackground || true,
+    printSelectionOnly: argv.s || argv.printSelectionOnly || false,
+    pageSize: argv.p || argv.pageSize || 'A4',
+    landscape: argv.l || argv.landscape || false,
+  }
+
+  var DPI = 96 //72
+  var pageDimensions = {
+    'A4': {x: 595, y: 842},
+    'Letter': {x: 8.5 * DPI, y: 11 * DPI},
+    'Legal': {x: 8.5 * DPI, y: 14 * DPI}
+  }
+
+  var pageDim = pageDimensions[pdfOptions.pageSize]
+  pageDim = pdfOptions.landscape ? {x: pageDim.y, y: pageDim.x} : pageDim
+  var winX = argv.x || argv.windowX || pageDim.x
+  var winY = argv.y || argv.windowY || pageDim.y
+
+  console.info('Opening a browser window', winX, 'x', winY)
   var win = new BrowserWindow({
     width: winX,
     height: winY,
-    show: false
+    x: 0, y:0,
+    show: true,
+    enableLargerThanScreen: true,
+    webPreferences: {
+      experimentalFeatures: false,
+      experimentalCanvasFeatures: false
+    }
   })
 
   win.on('closed', function () { win = null })
@@ -86,23 +112,16 @@ function render (indexUrl, output) {
   }
   win.loadURL(indexUrl, loadOpts)
 
-  // print to pdf args
-  var opts = {
-    marginsType: argv.m || argv.marginsType || argv.marginType || 0,
-    printBackground: argv.b || argv.printBackground || true,
-    printSelectionOnly: argv.s || argv.printSelectionOnly || false,
-    pageSize: argv.p || argv.pageSize || 'A4',
-    landscape: argv.l || argv.landscape || false
-  }
-
   win.webContents.on('did-finish-load', function () {
     setTimeout(function () {
-      win.webContents.printToPDF(opts, function (err, data) {
+      win.webContents.printToPDF(pdfOptions, function (err, data) {
         if (err) {
           console.error(err)
         }
 
-        fs.writeFile(path.resolve(output), data, function (err) {
+        var target = path.resolve(output)
+        console.log('writing to:', target)
+        fs.writeFile(target, data, function (err) {
           if (err) {
             console.error(err)
           }
