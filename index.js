@@ -3,70 +3,20 @@ var path = require('path')
 var url = require('url')
 
 var electron = require('electron')
-var parseArgs = require('minimist')
 
-var pkg = require('./package.json')
 var wargs = require('./lib/args')
 var markdownToHTMLPath = require('./lib/markdown')
 
 var HTML_DPI = 96
 
 var PDFExporter = function (input, output, argv) {
-
-  var argOptions = {
-    booleans: ['printBackground', 'landscape', 'printSelectionOnly', 'showWindow'],
-    alias: {
-      'input': 'i',
-      'output': 'o',
-
-      'cookie': ['cookies'],
-      'css': 'c',
-      'disableCache': 'd',
-      'help': 'h',
-      'landscape': 'l',
-      'marginsType': ['m', 'marginType'],
-      'outputWait': 'w',
-      'pageSize': 'p',
-      'printBackground': 'b',
-      'printSelectionOnly': 's',
-      'version': 'v',
-      'showWindow': ['r', 'renderWindow'],
-      'windowX': 'x',
-      'windowY': 'y'
-    },
-    default: {
-      'landscape': false,
-      'marginsType': 1,
-      'outputWait': 0,
-      'pageSize': 'A4',
-      'printBackground': true,
-      'printSelectionOnly': false,
-      'showWindow': false
+  var app = electron.app
+  app.on('ready', appReady)
+  app.on('window-all-closed', function () {
+    if (process.platform !== 'darwin') {
+      app.quit()
     }
-  }
-//TODO: Generate Usage Doc from argv options
-  var argv = parseArgs(process.argv.slice(2), argOptions)
-
-  var input = argv._[0] || argv.input
-  var output = argv._[1] || argv.output
-
-  if (argv.version) {
-    console.log('v' + pkg.version)
-    process.exit(0)
-  }
-
-  if (argv.help || !input || !output) {
-    usage(1)
-  }
-  else {
-    var app = electron.app
-    app.on('ready', appReady)
-    app.on('window-all-closed', function () {
-      if (process.platform !== 'darwin') {
-        app.quit()
-      }
-    })
-  }
+  })
 
   function appReady () {
     var customCss = argv.css
@@ -100,16 +50,14 @@ var PDFExporter = function (input, output, argv) {
     }
   }
 
-
   /**
    * Render markdown or html to pdf
    * @param {String} indexUrl The path to the HTML or url, or a markdown file
    *   with 'md' or 'markdown' extension.
-   * @param output The name of the file to export to.  If the extension is '.png'
-   *   then a PNG image will be generated instead of a PDF.
+   * @param output The name of the file to export to.  If the extension is
+   *   '.png' then a PNG image will be generated instead of a PDF.
    */
   function render (indexUrl, output) {
-
     var requestedURL = url.parse(indexUrl)
     var win = launchBrowserWindow()
     setSessionCookies(argv.cookies, requestedURL, win)
@@ -123,7 +71,8 @@ var PDFExporter = function (input, output, argv) {
 
   /**
    *
-   * @param {String} cookies - ';' delimited cookies, '=' delimited name/value pairs
+   * @param {String} cookies - ';' delimited cookies, '=' delimited name/value
+   *   pairs
    * @param {URL} requestedURL - URL Object
    * @param {BrowserWindow} win - The electron browser window
    */
@@ -166,10 +115,10 @@ var PDFExporter = function (input, output, argv) {
     var win = new electron.BrowserWindow({
       width: winX,
       height: winY,
-      //x: 0, y:0,
       show: argv.showWindow,
       enableLargerThanScreen: true,
-      // TODO: Allow Browser Window prefs to be passed in, use Lodash.extend to overlay them
+      // TODO: Allow Browser Window prefs to be passed in, use Lodash.extend to
+      // overlay them
       webPreferences: {
         experimentalFeatures: false,
         experimentalCanvasFeatures: false
@@ -200,9 +149,8 @@ var PDFExporter = function (input, output, argv) {
    * @param outputFile
    */
   function generateOutput (window, outputFile) {
-
     var png = outputFile.toLowerCase().endsWith('.png')
-    //Image (PNG)
+    // Image (PNG)
     if (png) {
       window.capturePage(function (image) {
         var target = path.resolve(outputFile)
@@ -213,14 +161,13 @@ var PDFExporter = function (input, output, argv) {
           app.quit()
         })
       })
-    } else { //PDF
-
+    } else { // PDF
       var pdfOptions = {
         marginsType: argv.marginsType,
         printBackground: argv.printBackground,
         printSelectionOnly: argv.printSelectionOnly,
         pageSize: argv.pageSize,
-        landscape: argv.landscape,
+        landscape: argv.landscape
       }
 
       window.webContents.printToPDF(pdfOptions, function (err, data) {
