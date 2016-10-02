@@ -9,6 +9,9 @@ var argOptions = {
   alias: {
     'input': 'i',
     'output': 'o',
+
+    'browserConfig': [],
+    'cookie': ['cookies'],
     'css': 'c',
     'disableCache': 'd',
     'help': 'h',
@@ -18,9 +21,7 @@ var argOptions = {
     'pageSize': 'p',
     'printBackground': 'b',
     'printSelectionOnly': 's',
-    'version': 'v',
-    'windowX': 'x',
-    'windowY': 'y'
+    'version': 'v'
   },
   default: {
     'landscape': false,

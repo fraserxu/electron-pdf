@@ -57,6 +57,23 @@ $ electron-pdf index.html ~/Desktop/index.pdf -c my-awesome-css.css
 $ electron-pdf https://fraserxu.me ~/Desktop/fraserxu.pdf
 ```
 
+### To specify browser options
+
+The [BrowserWindow supports many options](https://github
+.com/electron/electron/blob/master/docs/api/browser-window.md#new-browserwindowoptions) which you
+ may define by passing a JSON Object to the `--browserConfig` option.
+ 
+Some common use cases may include:
+
+* `height` and `width` - electron-pdf calculates the browser height and width based off of the 
+dimensions of PDF page size multiplied by the HTML standard of 96 pixels/inch.  So only set these
+ values if you need to override this behavior
+* `show` - to display the browser window during generation
+
+```
+$ electron-pdf https://fraserxu.me ~/Desktop/fraserxu.pdf --browserConfig '{"show":true}'
+```
+
 ### More
 
 ```
@@ -68,6 +85,8 @@ $ electron-pdf https://fraserxu.me ~/Desktop/fraserxu.pdf
     --version                  Current version of package
     -i | --input               String - The path to the HTML file or url
     -o | --output              String - The path of the output PDF
+    
+    --browserConfig            String - A valid JSON String that will be parsed into the options passed to electron.BrowserWindow
     -c | --css                 String - The path to custom CSS
     -b | --printBackground     Boolean - Whether to print CSS backgrounds.
                                  false - true

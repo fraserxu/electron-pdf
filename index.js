@@ -3,6 +3,7 @@ var path = require('path')
 var url = require('url')
 
 var electron = require('electron')
+var _ = require('lodash')
 
 var wargs = require('./lib/args')
 var markdownToHTMLPath = require('./lib/markdown')
@@ -99,34 +100,35 @@ var PDFExporter = function (input, output, argv) {
    * @returns {electron.BrowserWindow}
    */
   function launchBrowserWindow () {
+    function pdfToPixels (inches) {
+      return Math.floor(inches * HTML_DPI)
+    }
+
     var pageDimensions = {
-      'A4': {x: 595, y: 842},
-      'Letter': {x: 8.5 * HTML_DPI, y: 11 * HTML_DPI},
-      'Legal': {x: 8.5 * HTML_DPI, y: 14 * HTML_DPI}
+      'A3': {x: pdfToPixels(11.7), y: pdfToPixels(16.5)},
+      'A4': {x: pdfToPixels(8.3), y: pdfToPixels(11.7)},
+      'A5': {x: pdfToPixels(5.8), y: pdfToPixels(8.3)},
+      'Letter': {x: pdfToPixels(8.5), y: pdfToPixels(11)},
+      'Legal': {x: pdfToPixels(8.5), y: pdfToPixels(14)},
+      'Tabloid': {x: pdfToPixels(11), y: pdfToPixels(17)}
     }
 
     var pageDim = pageDimensions[argv.pageSize]
     pageDim = argv.landscape ? {x: pageDim.y, y: pageDim.x} : pageDim
-    var winX = argv.windowX || pageDim.x
-    var winY = argv.windowY || pageDim.y
 
-    console.info('Opening a browser window', winX, 'x', winY)
-
-    var win = new electron.BrowserWindow({
-      width: winX,
-      height: winY,
-      show: argv.showWindow,
+    var defaultOpts = {
+      width: pageDim.x,
+      height: pageDim.y,
       enableLargerThanScreen: true,
-      // TODO: Allow Browser Window prefs to be passed in, use Lodash.extend to
-      // overlay them
-      webPreferences: {
-        experimentalFeatures: false,
-        experimentalCanvasFeatures: false
-      }
-    })
-    win.on('closed', function () {
-      win = null
-    })
+      show: false
+    }
+
+    var browserConfig = _.extend(defaultOpts, JSON.parse(argv.browserConfig || {}))
+
+    console.info('Opening a browser window', browserConfig.width, 'x', browserConfig.height)
+    var win = new electron.BrowserWindow(browserConfig)
+    win.on('closed', function () { win = null })
+
     return win
   }
 
