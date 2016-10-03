@@ -123,7 +123,7 @@ var PDFExporter = function (input, output, argv) {
       show: false
     }
 
-    var browserConfig = _.extend(defaultOpts, JSON.parse(argv.browserConfig || {}))
+    var browserConfig = _.extend(defaultOpts, JSON.parse(argv.browserConfig || '{}'))
 
     console.info('Opening a browser window', browserConfig.width, 'x', browserConfig.height)
     var win = new electron.BrowserWindow(browserConfig)
