@@ -123,8 +123,15 @@ var PDFExporter = function (input, output, argv) {
       show: false
     }
 
-    var browserConfig = _.extend(defaultOpts, JSON.parse(argv.browserConfig || '{}'))
+    var cmdLineBrowserConfig = {}
+    try {
+      cmdLineBrowserConfig = JSON.parse(argv.browserConfig || '{}')
+    } catch (e) {
+      console.log('Invalid browserConfig provided, using defaults. ' +
+                  'Value:', argv.browserConfig, '\nError:', e)
+    }
 
+    var browserConfig = _.extend(defaultOpts, cmdLineBrowserConfig)
     console.info('Opening a browser window', browserConfig.width, 'x', browserConfig.height)
     var win = new electron.BrowserWindow(browserConfig)
     win.on('closed', function () { win = null })

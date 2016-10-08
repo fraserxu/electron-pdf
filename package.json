@@ -28,8 +28,7 @@
     "standard": "^6.0.6"
   },
   "dependencies": {
-    "electron": "^1.4.1",
-    "electron-prebuilt": "^1.4.1",
+    "electron": "^1.4.3",
     "github-markdown-css": "^2.0.9",
     "highlight.js": "^9.0.0",
     "lodash": "^4.16.2",
