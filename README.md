@@ -89,7 +89,7 @@ $ electron-pdf https://fraserxu.me ~/Desktop/fraserxu.pdf --browserConfig '{"sho
     --browserConfig            String - A valid JSON String that will be parsed into the options passed to electron.BrowserWindow
     -c | --css                 String - The path to custom CSS
     -b | --printBackground     Boolean - Whether to print CSS backgrounds.
-                                 false - true
+                                 false - default
     -s | --printSelectionOnly  Boolean - Whether to print selection only
                                  false - default
     -p | --pageSize            String - Can be A3, A4, A5, Legal, Letter, Tabloid or an Object containing height and width in microns
