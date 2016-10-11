@@ -48,7 +48,12 @@ if (argv.help || !input || !output) {
   usage(1)
 } else {
   var exporter = new Exporter()
-  exporter.on('charged', () => exporter.runExport(input, output, argv))
+  exporter.on('charged', () => {
+    exporter.runExport(input, output, argv, () => {
+      console.log('Export Complete')
+      exporter.stop()
+    })
+  })
   exporter.start()
 }
 

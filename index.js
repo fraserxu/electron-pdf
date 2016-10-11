@@ -37,13 +37,17 @@ class PDFExporter extends EventEmitter {
     })
   }
 
+  stop () {
+    electronApp.quit()
+  }
+
   /**
    * Run an export job
    * @param input {String} URL for filepath
    * @param output {String} Filename
    * @param args {array} command line args
    */
-  runExport (input, output, args) {
+  runExport (input, output, args, done) {
     var customCss = args.css
 
     function isMarkdown (input) {
@@ -67,11 +71,11 @@ class PDFExporter extends EventEmitter {
         }
 
         var indexUrl = wargs.urlWithArgs(tmpHTMLPath, {})
-        this._render(indexUrl, output)
+        this._render(indexUrl, output, args, done)
       })
     } else {
       var indexUrl = wargs.urlWithArgs(input, {})
-      this._render(indexUrl, output, args)
+      this._render(indexUrl, output, args, done)
     }
   }
 
@@ -85,12 +89,12 @@ class PDFExporter extends EventEmitter {
    * @param output The name of the file to export to.  If the extension is
    *   '.png' then a PNG image will be generated instead of a PDF.
    */
-  _render (indexUrl, output, args) {
+  _render (indexUrl, output, args, done) {
     var requestedURL = url.parse(indexUrl)
     var win = this._launchBrowserWindow(args)
     this._setSessionCookies(args.cookies, requestedURL, win)
     this._loadURL(win, indexUrl, args)
-    var generate = this._generateOutput.bind(this, win, output, args)
+    var generate = this._generateOutput.bind(this, win, output, args, done)
     win.webContents.on('did-finish-load', function () {
       setTimeout(generate, args.outputWait)
     })
@@ -188,7 +192,7 @@ class PDFExporter extends EventEmitter {
    * @param window
    * @param outputFile
    */
-  _generateOutput (window, outputFile, args) {
+  _generateOutput (window, outputFile, args, done) {
     var png = outputFile.toLowerCase().endsWith('.png')
     // Image (PNG)
     if (png) {
@@ -198,7 +202,6 @@ class PDFExporter extends EventEmitter {
           if (err) {
             console.error(err)
           }
-          electronApp.quit()
         })
       })
     } else { // PDF
@@ -220,7 +223,8 @@ class PDFExporter extends EventEmitter {
           if (err) {
             console.error(err)
           }
-          electronApp.quit()
+          done()
+          // TODO: Events instead of callbacks? this.emit('render-complete', outputFile)
         })
       })
     }
