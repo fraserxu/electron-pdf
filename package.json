@@ -5,7 +5,7 @@
   "main": "lib/index.js",
   "scripts": {
     "lint": "standard",
-    "test": "standard && electron node_modules/.bin/jasmine"
+    "test": "standard && node_modules/.bin/electron node_modules/.bin/jasmine"
   },
   "bin": {
     "electron-pdf": "cli.js"
@@ -17,7 +17,10 @@
   "keywords": [
     "electron",
     "electron-tool",
-    "pdf"
+    "pdf",
+    "png",
+    "export",
+    "render"
   ],
   "author": "Fraser Xu",
   "license": "MIT",
@@ -31,7 +34,6 @@
   },
   "dependencies": {
     "electron": "^1.4.3",
-    "eventemitter3": "^2.0.2",
     "github-markdown-css": "^2.0.9",
     "highlight.js": "^9.0.0",
     "lodash": "^4.16.2",
