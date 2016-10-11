@@ -1,6 +1,6 @@
 /* eslint-env jasmine */
 
-var ElectronPDF = require('../index')
+var ElectronPDF = require('../lib/index')
 
 describe('Initialization', () => {
   it('triggers ready event', (done) => {
