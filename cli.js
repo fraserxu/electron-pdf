@@ -15,6 +15,6 @@ var electron = spawn(electronPath, args, {
 electron.stderr.on('data', function (data) {
   var str = data.toString('utf8')
   // it's Chromium, STFU
-  if (str.match(/^\[\d+\:\d+/)) return
+  if (str.match(/^\[\d+:\d+/)) return
   process.stderr.write(data)
 })

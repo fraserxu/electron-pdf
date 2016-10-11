@@ -4,7 +4,8 @@
   "description": "A command line tool to generate PDF from URL, HTML or Markdown files",
   "main": "index.js",
   "scripts": {
-    "test": "standard"
+    "lint": "standard",
+    "test": "standard && electron node_modules/.bin/jasmine"
   },
   "bin": {
     "electron-pdf": "cli.js"
@@ -25,10 +26,12 @@
   },
   "homepage": "https://github.com/fraserxu/electron-pdf",
   "devDependencies": {
-    "standard": "^6.0.6"
+    "jasmine": "^2.5.2",
+    "standard": "^8.4.0"
   },
   "dependencies": {
     "electron": "^1.4.3",
+    "eventemitter3": "^2.0.2",
     "github-markdown-css": "^2.0.9",
     "highlight.js": "^9.0.0",
     "lodash": "^4.16.2",
