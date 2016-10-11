@@ -29,3 +29,5 @@ node_modules
 index.html
 *.pdf
 *.css
+
+.idea
