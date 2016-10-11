@@ -25,7 +25,7 @@
   },
   "homepage": "https://github.com/fraserxu/electron-pdf",
   "devDependencies": {
-    "standard": "^6.0.6"
+    "standard": "^8.4.0"
   },
   "dependencies": {
     "electron-prebuilt": "^1.2.2",
