@@ -2,7 +2,7 @@ var parseArgs = require('minimist')
 var fs = require('fs')
 var path = require('path')
 var pkg = require('./package.json')
-var exporter = require('./index')
+var Exporter = require('./index')
 
 var argOptions = {
   booleans: ['printBackground', 'landscape', 'printSelectionOnly'],
@@ -47,7 +47,9 @@ if (argv.version) {
 if (argv.help || !input || !output) {
   usage(1)
 } else {
-  exporter(input, output, argv)
+  var exporter = new Exporter()
+  exporter.on('charged', () => exporter.runExport(input, output, argv))
+  exporter.start()
 }
 
 function usage (code) {
