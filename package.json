@@ -6,7 +6,8 @@
   "scripts": {
     "fix": "standard --fix",
     "lint": "standard",
-    "test": "standard && node_modules/.bin/electron node_modules/.bin/jasmine"
+    "test": "npm run lint && ava",
+    "integration-test": "electron node_modules/.bin/jasmine"
   },
   "bin": {
     "electron-pdf": "cli.js"
@@ -30,6 +31,7 @@
   },
   "homepage": "https://github.com/fraserxu/electron-pdf",
   "devDependencies": {
+    "ava": "^0.16.0",
     "jasmine": "^2.5.2",
     "standard": "^8.4.0"
   },
