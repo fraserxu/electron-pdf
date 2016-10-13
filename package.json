@@ -5,7 +5,8 @@
   "main": "lib/index.js",
   "scripts": {
     "lint": "standard",
-    "test": "standard && node_modules/.bin/electron node_modules/.bin/jasmine"
+    "\\" : "This effectively runs jasmine tests as an electron application (but it doesn't work for Ava)",
+    "test": "standard && electron node_modules/.bin/jasmine"
   },
   "bin": {
     "electron-pdf": "cli.js"
