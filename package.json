@@ -4,6 +4,7 @@
   "description": "A command line tool to generate PDF from URL, HTML or Markdown files",
   "main": "lib/index.js",
   "scripts": {
+    "fix": "standard --fix",
     "lint": "standard",
     "\\" : "This effectively runs jasmine tests as an electron application (but it doesn't work for Ava)",
     "test": "standard && electron node_modules/.bin/jasmine"
@@ -34,6 +35,7 @@
     "standard": "^8.4.0"
   },
   "dependencies": {
+    "async": "^2.0.1",
     "electron": "^1.4.3",
     "github-markdown-css": "^2.0.9",
     "highlight.js": "^9.0.0",
