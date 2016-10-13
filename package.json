@@ -6,8 +6,9 @@
   "scripts": {
     "fix": "standard --fix",
     "lint": "standard",
+    "test": "npm run lint && ava",
     "\\" : "This effectively runs jasmine tests as an electron application (but it doesn't work for Ava)",
-    "test": "standard && electron node_modules/.bin/jasmine"
+    "integration-test": "electron node_modules/.bin/jasmine"
   },
   "bin": {
     "electron-pdf": "cli.js"
@@ -31,6 +32,7 @@
   },
   "homepage": "https://github.com/fraserxu/electron-pdf",
   "devDependencies": {
+    "ava": "^0.16.0",
     "jasmine": "^2.5.2",
     "standard": "^8.4.0"
   },
