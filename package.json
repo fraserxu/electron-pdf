@@ -2,9 +2,11 @@
   "name": "electron-pdf",
   "version": "0.12.0",
   "description": "A command line tool to generate PDF from URL, HTML or Markdown files",
-  "main": "index.js",
+  "main": "lib/index.js",
   "scripts": {
-    "test": "standard"
+    "lint": "standard",
+    "\\" : "This effectively runs jasmine tests as an electron application (but it doesn't work for Ava)",
+    "test": "standard && electron node_modules/.bin/jasmine"
   },
   "bin": {
     "electron-pdf": "cli.js"
@@ -16,7 +18,10 @@
   "keywords": [
     "electron",
     "electron-tool",
-    "pdf"
+    "pdf",
+    "png",
+    "export",
+    "render"
   ],
   "author": "Fraser Xu",
   "license": "MIT",
@@ -25,7 +30,8 @@
   },
   "homepage": "https://github.com/fraserxu/electron-pdf",
   "devDependencies": {
-    "standard": "^6.0.6"
+    "jasmine": "^2.5.2",
+    "standard": "^8.4.0"
   },
   "dependencies": {
     "electron": "^1.4.3",
