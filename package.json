@@ -7,6 +7,7 @@
     "fix": "standard --fix",
     "lint": "standard",
     "test": "npm run lint && ava",
+    "\\" : "This effectively runs jasmine tests as an electron application (but it doesn't work for Ava)",
     "integration-test": "electron node_modules/.bin/jasmine"
   },
   "bin": {
