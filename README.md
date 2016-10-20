@@ -74,6 +74,21 @@ dimensions of PDF page size multiplied by the HTML standard of 96 pixels/inch.  
 $ electron-pdf https://fraserxu.me ~/Desktop/fraserxu.pdf --browserConfig '{"show":true}'
 ```
 
+### To generate a PDF after the an async task in the HTML
+
+```
+electron-pdf ./index.html ~/Desktop/README.pdf -e
+```
+
+In your application, at the point which the view is ready for rendering
+
+```javascript
+try {
+    // IE doesn't support this but that's ok, it runs it in Electron/Chrome
+    document.body.dispatchEvent(new Event('view-ready'))
+} catch (e){}
+```
+
 ### More
 
 ```
@@ -102,6 +117,9 @@ $ electron-pdf https://fraserxu.me ~/Desktop/fraserxu.pdf --browserConfig '{"sho
                                  2 - minimum
     -d | --disableCache        Disable HTTP caching
     -w | --outputWait          Integer – Time to wait (in MS) between page load and PDF creation
+    -e | --waitForJSEvent      String - The name of the event to wait before PDF creation
+                               'view-ready' - default
+    
 
   Usage
     $ electron-pdf <input> <output>
