@@ -59,8 +59,7 @@ $ electron-pdf https://fraserxu.me ~/Desktop/fraserxu.pdf
 
 ### To specify browser options
 
-The [BrowserWindow supports many options](https://github
-.com/electron/electron/blob/master/docs/api/browser-window.md#new-browserwindowoptions) which you
+The [BrowserWindow supports many options](https://github.com/electron/electron/blob/master/docs/api/browser-window.md#new-browserwindowoptions) which you
  may define by passing a JSON Object to the `--browserConfig` option.
  
 Some common use cases may include:
