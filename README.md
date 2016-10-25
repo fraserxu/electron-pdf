@@ -115,7 +115,7 @@ try {
                                  1 - none
                                  2 - minimum
     -d | --disableCache        Disable HTTP caching
-    -w | --outputWait          Integer – Time to wait (in MS) between page load and PDF creation
+    -w | --outputWait          Integer – Time to wait (in MS) between page load and PDF creation.  If used in conjunction with -e this will override the default timeout of 10 seconds
     -e | --waitForJSEvent      String - The name of the event to wait before PDF creation
                                'view-ready' - default
     
