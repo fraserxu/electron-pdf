@@ -6,7 +6,8 @@
   "scripts": {
     "fix": "standard --fix",
     "lint": "standard",
-    "test": "npm run lint && ava",
+    "unit-test": "ava | tap-diff",
+    "test": "npm run lint && ava | tap-diff",
     "\\": "This effectively runs jasmine tests as an electron application (but it doesn't work for Ava)",
     "integration-test": "electron node_modules/.bin/jasmine"
   },
@@ -34,7 +35,9 @@
   "devDependencies": {
     "ava": "^0.16.0",
     "jasmine": "^2.5.2",
-    "standard": "^8.4.0"
+    "standard": "^8.4.0",
+    "tap-diff": "^0.1.1",
+    "tap-spec": "^4.1.1"
   },
   "dependencies": {
     "async": "^2.0.1",
@@ -48,5 +51,11 @@
     "minimist": "^1.2.0",
     "object-assign": "^4.0.1",
     "uuid": "^2.0.1"
+  },
+  "ava": {
+    "concurrency": 5,
+    "failFast": true,
+    "tap": true,
+    "powerAssert": false
   }
 }
