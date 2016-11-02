@@ -30,8 +30,60 @@ $ electron-pdf ...
 
 There is also an example docker machine [here](https://github.com/fraserxu/docker-tape-run).
 
-Usage
+Node Usage
 -----
+Electron PDF can be used inside of an application, or more commonly as the engine for a pdf 
+rendering service.  For instance, to handle http requests using Express.  The following snipppets 
+show you how you can get started.
+
+### The application must run in an Electron process
+
+In `package.json`
+```json
+"start": "DEBUG=electronpdf:* electron index.js",
+"watch": "DEBUG=electronpdf:* nodemon --exec electron index.js"
+```
+
+### You can use the same instance
+
+```javascript
+var ElectronPDF = require('electron-pdf')
+var express = require('express')
+var bodyParser = require('body-parser')
+var app = express()
+app.use(bodyParser.json())
+
+var exporter = new ElectronPDF()
+exporter.on('charged', () => {
+	//Only start the express server once the exporter is ready
+	app.listen(port, hostname, function() {
+		console.log(`Export Server running at http://${hostname}:${port}`);
+	})
+})
+exporter.start()
+```
+
+### And handle multiple export job instances
+
+```javascript
+app.post('/pdfexport', function(req,res){
+	// derive job arguments from request here
+	var job = exporter.createJob(source, target, options)
+	job.on('job-complete', (r) => {
+		console.log('pdf files:', r.results)
+		// Process the PDF file(s) here
+	})
+	job.render()	
+})
+```
+
+The API is designed to emit noteworthy events rather than use callbacks.
+Full documentation of all events is a work in progress.
+
+Command Line Usage
+-----
+
+For Ad-hoc conversions, Electron PDF comes with support for a CLI.
 
 ### To generate a PDF from a HTML file
 
@@ -56,6 +108,11 @@ $ electron-pdf index.html ~/Desktop/index.pdf -c my-awesome-css.css
 ```
 $ electron-pdf https://fraserxu.me ~/Desktop/fraserxu.pdf
 ```
+
+Rendering Options
+-----
+Electron PDF gives you complete control of how the BrowserWindow should be configured, and when 
+the window contents should be captured.
 
 ### To specify browser options
 
@@ -82,13 +139,14 @@ electron-pdf ./index.html ~/Desktop/README.pdf -e
 In your application, at the point which the view is ready for rendering
 
 ```javascript
-try {
-    // IE doesn't support this but that's ok, it runs it in Electron/Chrome
-    document.body.dispatchEvent(new Event('view-ready'))
-} catch (e){}
+document.body.dispatchEvent(new Event('view-ready'))
 ```
 
-### More
+All Available Options
+-----
+
+Electron PDF exposes the printToPDF settings (i.e. pageSize, orientation, margins, etc.) 
+available from the Electron API.  See the following options for usage.
 
 ```
 
@@ -133,6 +191,13 @@ try {
 ```
 
 Inspired by [electron-mocha](https://github.com/jprichardson/electron-mocha)
+
+### Extensions
+
+If you need powerpoint support, [pdf-powerpoint](https://www.npmjs.com/package/pdf-powerpoint) 
+picks up where Electron PDF leaves off by converting each page in the PDF to a PNG and placing 
+them on individual slides.
+
 
 ### License
 
