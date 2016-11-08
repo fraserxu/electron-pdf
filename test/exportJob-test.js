@@ -1,7 +1,17 @@
 import {test} from 'ava'
 
 import ExportJob from '../lib/exportJob'
-const job = new ExportJob()
+
+const micronDims = {
+  width: 304800,
+  height: 228600
+}
+
+const options = {
+  pageSize: JSON.stringify(micronDims)
+}
+
+const job = new ExportJob('input', 'output', options)
 
 test('getPageDimensions_Letter_Portrait', t => {
   const dim = job._getPageDimensions('Letter', false)
@@ -14,12 +24,11 @@ test('getPageDimensions_Letter_Landscape', t => {
 })
 
 test('getPageDimensions_object', t => {
-  const micronDims = {
-    width: ExportJob.MICRONS_INCH_RATIO,
-    height: ExportJob.MICRONS_INCH_RATIO
-  }
   const dim = job._getPageDimensions(micronDims, false)
-  t.deepEqual(dim, {x: ExportJob.HTML_DPI, y: ExportJob.HTML_DPI})
+  t.deepEqual(dim, {
+    x: ExportJob.HTML_DPI * 12,
+    y: ExportJob.HTML_DPI * 9
+  })
 })
 
 // Cookie Tests
