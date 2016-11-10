@@ -11,8 +11,19 @@ const options = {
   pageSize: JSON.stringify(micronDims)
 }
 
-const job = new ExportJob('input', 'output', options)
+let job = new ExportJob(['input'], 'output.pdf', options)
 
+// Construction
+/**
+ * API expects an array, but guard against a string input
+ * and add it to an array
+ */
+test('constructor_input_singleString', t => {
+  let job = new ExportJob('input', 'output.pdf', options)
+  t.deepEqual(job.input, ['input'])
+})
+
+// Page Dimensions
 test('getPageDimensions_Letter_Portrait', t => {
   const dim = job._getPageDimensions('Letter', false)
   t.deepEqual(dim, {x: 816, y: 1056})
@@ -29,6 +40,18 @@ test('getPageDimensions_object', t => {
     x: ExportJob.HTML_DPI * 12,
     y: ExportJob.HTML_DPI * 9
   })
+})
+
+// File Generation
+test('getTargetFile', t => {
+  const fileName = job._getTargetFile(2)
+  t.is(fileName, 'output.pdf')
+})
+
+test('getTargetFile_multiple_inputs', t => {
+  job = new ExportJob(['input1', 'input2'], 'output.pdf', options)
+  const fileName = job._getTargetFile(1)
+  t.is(fileName, 'output_2.pdf')
 })
 
 // Cookie Tests
