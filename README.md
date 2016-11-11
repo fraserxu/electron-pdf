@@ -68,12 +68,13 @@ exporter.start()
 ```javascript
 app.post('/pdfexport', function(req,res){
 	// derive job arguments from request here
-	var job = exporter.createJob(source, target, options)
+	exporter.createJob(source, target, options).then( job => {
 	job.on('job-complete', (r) => {
-		console.log('pdf files:', r.results)
-		// Process the PDF file(s) here
-	})
-	job.render()	
+    		console.log('pdf files:', r.results)
+    		// Process the PDF file(s) here
+    	})
+    	job.render()
+	})	
 })
 ```
 
