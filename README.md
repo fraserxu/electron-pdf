@@ -143,6 +143,32 @@ In your application, at the point which the view is ready for rendering
 document.body.dispatchEvent(new Event('view-ready'))
 ```
 
+#### Observing your own event
+
+If the page you are rending is under your control, and you wish to modify the behavior
+of the rendering process you can use a [CustomEvent](https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent/CustomEvent)
+and an observer that will be triggered after the view is ready but before it is captured.
+
+##### your-page.html
+
+```javascript
+document.body.dispatchEvent(new CustomEvent('view-ready', { detail: {layout: landscape} }))
+```
+
+##### your-exporter.js
+As an example, suppose you wanted to change the orientation of the PDF
+
+```javascript
+job.observeReadyEvent( (detail) => {
+    return new Promise( (resolve,reject) => {
+      if( detail && detail.landscape ){
+        job.changeArgValue('landscape', true)
+      }
+      resolve()
+    })
+})
+```
+
 All Available Options
 -----
 
