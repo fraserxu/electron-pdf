@@ -156,13 +156,16 @@ document.body.dispatchEvent(new CustomEvent('view-ready', { detail: {layout: lan
 ```
 
 ##### your-exporter.js
+As an example, suppose you wanted to change the orientation of the PDF
 
 ```javascript
-job.observeRenderEvent( detail => {
-    var d = detail || {}
-    if( d.layout === 'landscape') {
-      job.changeArgValue('landscape', d.landscape)
-    }
+job.observeReadyEvent( (detail) => {
+    return new Promise( (resolve,reject) => {
+      if( detail && detail.landscape ){
+        job.changeArgValue('landscape', true)
+      }
+      resolve()
+    })
 })
 ```
 
