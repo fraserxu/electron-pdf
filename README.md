@@ -98,7 +98,7 @@ $ electron-pdf index.html ~/Desktop/index.pdf
 $ electron-pdf index.md ~/Desktop/index.pdf
 ```
 
-### To generate a PDF from a Markdown file with custom CSS(defaut to Github markdown style)
+### To generate a PDF from a Markdown file with custom CSS (defaults to Github markdown style)
 
 ```
 $ electron-pdf index.html ~/Desktop/index.pdf -c my-awesome-css.css
