@@ -39,7 +39,8 @@
     "jasmine": "^2.5.2",
     "standard": "^8.4.0",
     "tap-diff": "^0.1.1",
-    "tap-spec": "^4.1.1"
+    "tap-spec": "^4.1.1",
+    "validator": "^6.2.0"
   },
   "dependencies": {
     "async": "^2.0.1",
