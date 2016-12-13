@@ -1,4 +1,6 @@
 import {test} from 'ava'
+import _ from 'lodash'
+import validator from 'validator'
 
 import ExportJob from '../lib/exportJob'
 
@@ -21,6 +23,21 @@ let job = new ExportJob(['input'], 'output.pdf', options)
 test('constructor_input_singleString', t => {
   let job = new ExportJob('input', 'output.pdf', options)
   t.deepEqual(job.input, ['input'])
+})
+
+// BrowserWindow Options
+test('getBrowserConfiguration_sessionPartitionForCookies', t => {
+  const args = _.extend({cookies: []}, options)
+
+  const config = job._getBrowserConfiguration(args)
+
+  const partition = config.webPreferences.partition
+  t.true(validator.isUUID(partition), 'partition should be a UUID')
+})
+
+test('getBrowserConfiguration_noSessionPartitionUnlessCookies', t => {
+  const config = job._getBrowserConfiguration(options)
+  t.falsy(config.webPreferences.partition)
 })
 
 // Page Dimensions
