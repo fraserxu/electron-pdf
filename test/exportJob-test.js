@@ -9,11 +9,12 @@ const micronDims = {
   height: 228600
 }
 
+const args = {}
 const options = {
   pageSize: JSON.stringify(micronDims)
 }
 
-let job = new ExportJob(['input'], 'output.pdf', options)
+let job = new ExportJob(['input'], 'output.pdf', args, options)
 
 // Construction
 /**
@@ -92,6 +93,38 @@ test('setSessionCookie_multiple', t => {
     name: 'JSESSIONID',
     value: 'bar'
   })
+})
+
+// PDF Completion Tests
+
+test.cb('handlePDF_electronError', t => {
+  const cb = (e, d) => {
+    t.is(e, 'error occurred')
+    t.end()
+  }
+  job._handlePDF('output.pdf', cb, 'error occurred', undefined)
+})
+
+test.cb('handlePDF_inMemory', t => {
+  // Arrange
+  const opts = _.extend({}, options, {inMemory: true})
+  const inMemJob = new ExportJob(['input'], 'output.pdf', {}, opts)
+  let windowEventData
+  inMemJob.on('window.capture.end', (event) => {
+    windowEventData = event.data
+  })
+  const err = undefined
+  const data = 'binaryPDFDataWouldGoHere'
+
+  // Assert
+  const cb = (e, d) => {
+    t.is(d, windowEventData) // the window.capture.end event was emitted with data
+    t.is(d, data) // The raw data was returned and not a filepath
+    t.end()
+  }
+
+  // Act
+  inMemJob._handlePDF('output.pdf', cb, err, data)
 })
 
 // Support Functions
