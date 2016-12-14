@@ -16,7 +16,7 @@ test('resolve() handles arrays of strings', t => {
 })
 
 test('resolve() converts markdown to html', t => {
-  source.resolve(['../README.md'], {}).then(result => {
+  source.resolve(['./README.md'], {}).then(result => {
     t.is(result.length, 1)
     t.truthy(result[0].endsWith('.html'))
   })

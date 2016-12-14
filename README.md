@@ -68,7 +68,18 @@ exporter.start()
 ```javascript
 app.post('/pdfexport', function(req,res){
 	// derive job arguments from request here
-	exporter.createJob(source, target, options).then( job => {
+	// 
+	const jobOptions = {
+	  /**
+	    r.results[] will contain the following based on inMemory
+          false: the fully qualified path to a PDF file on disk
+          true: The Buffer Object as returned by Electron
+	    
+	    Note: the default is false, this can not be set using the CLI
+	   */
+	  inMemory: false 
+	}
+	exporter.createJob(source, target, options, jobOptions).then( job => {
 	job.on('job-complete', (r) => {
     		console.log('pdf files:', r.results)
     		// Process the PDF file(s) here
@@ -77,6 +88,25 @@ app.post('/pdfexport', function(req,res){
 	})	
 })
 ```
+
+#### Using an in memory Buffer
+
+If you set the `inMemory` setting to true, you must also set `closeWindow=true`
+or you will get a segmentation fault anytime the window is closed before the buffer 
+is sent on the response.  You then need to invoke `job.destroy` to close the window.
+
+Sample Code:
+```javascript
+const jobOptions = { inMemory: true, closeWindow: false }
+exporter.createJob(source, target, options, jobOptions).then( job => {
+	job.on('job-complete', (r) => {
+	  //Send the Buffer here
+	  process.nextTick(() => {job.destroy()})
+	})
+})
+```
+
+## Events
 
 The API is designed to emit noteworthy events rather than use callbacks.
 Full documentation of all events is a work in progress.
