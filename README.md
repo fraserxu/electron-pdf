@@ -89,6 +89,25 @@ app.post('/pdfexport', function(req,res){
 })
 ```
 
+#### Using an in memory Buffer
+
+If you set the `isMemory` setting to true, you must also set `closeWindow=true`
+or you will get a segmentation fault anytime the window is closed before the buffer 
+is sent on the response.  You then need to invoke `job.destroy` to close the window.
+
+Sample Code:
+```javascript
+const jobOptions = { inMemory: true, closeWindow: false }
+exporter.createJob(source, target, options, jobOptions).then( job => {
+	job.on('job-complete', (r) => {
+	  //Send the Buffer here
+	  process.nextTick(() => {job.destroy()})
+	})
+})
+```
+
+## Events
+
 The API is designed to emit noteworthy events rather than use callbacks.
 Full documentation of all events is a work in progress.
 
