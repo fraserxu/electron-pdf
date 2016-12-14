@@ -230,6 +230,19 @@ available from the Electron API.  See the following options for usage.
 
 Inspired by [electron-mocha](https://github.com/jprichardson/electron-mocha)
 
+### Other Formats
+
+Want to use the same options, but export to PNG or snapshot the rendered HTML?
+Just set the output filename to end in .png or .html instead!
+
+```
+  Examples
+    $ electron-pdf http://fraserxu.me ~/Desktop/fraserxu.pdf
+    $ electron-pdf http://fraserxu.me ~/Desktop/fraserxu.html
+    $ electron-pdf http://fraserxu.me ~/Desktop/fraserxu.png
+
+```
+
 ### Extensions
 
 If you need powerpoint support, [pdf-powerpoint](https://www.npmjs.com/package/pdf-powerpoint) 
