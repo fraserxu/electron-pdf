@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Event Test Page</title>
+</head>
+<body>
+<h1>Used to test responding to a ready event emitted on document</h1>
+
+<table>
+	<thead>
+	<th>One</th>
+	<th>Two</th>
+	<th>Three</th>
+	</thead>
+	<tbody id="table">
+
+	</tbody>
+</table>
+<script>
+
+  var table = document.getElementById('table')
+  for (i = 0; i < 100; i++) {
+    table.innerHTML += '<tr><td>Hello</td><td>Loveley</td><td>World</td></tr>'
+  }
+
+  // There is a Bug with Chromium that does not position headers correctly when scaled
+  // Maybe they'll fix it one of these days, this is a quick check to see
+  table.style.transformOrigin = 'top left'
+  table.style.transform='scale(.8)'
+
+  setTimeout(function () {
+    //document.dispatchEvent(new Event('ready'))
+    document.dispatchEvent(new CustomEvent('ready', {}))
+  }, 500)
+</script>
+</body>
+</html>

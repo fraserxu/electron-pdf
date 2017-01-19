@@ -170,7 +170,7 @@ electron-pdf ./index.html ~/Desktop/README.pdf -e
 In your application, at the point which the view is ready for rendering
 
 ```javascript
-document.body.dispatchEvent(new Event('view-ready'))
+document.dispatchEvent(new Event('view-ready'))
 ```
 
 #### Observing your own event
@@ -182,7 +182,7 @@ and an observer that will be triggered after the view is ready but before it is 
 ##### your-page.html
 
 ```javascript
-document.body.dispatchEvent(new CustomEvent('view-ready', { detail: {layout: landscape} }))
+document.dispatchEvent(new CustomEvent('view-ready', { detail: {layout: landscape} }))
 ```
 
 ##### your-exporter.js
