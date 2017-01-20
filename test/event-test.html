@@ -31,7 +31,7 @@
 
   setTimeout(function () {
 //    document.dispatchEvent(new Event('ready'))
-    document.dispatchEvent(new CustomEvent('ready', {}))
+    document.body.dispatchEvent(new CustomEvent('ready', {}))
   }, 500)
 
 </script>
