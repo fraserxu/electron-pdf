@@ -79,6 +79,9 @@ app.post('/pdfexport', function(req,res){
 	   */
 	  inMemory: false 
 	}
+	const options = {
+  		pageSize : "A4"
+	}
 	exporter.createJob(source, target, options, jobOptions).then( job => {
 	job.on('job-complete', (r) => {
     		console.log('pdf files:', r.results)
