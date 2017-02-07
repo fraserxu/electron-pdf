@@ -52,8 +52,8 @@ test('getPageDimensions_Letter_Landscape', t => {
   t.deepEqual(dim, {x: 1056, y: 816})
 })
 
-test('getPageDimensions_object', t => {
-  const dim = job._getPageDimensions(micronDims, false)
+test('getPageDimensions_object_landscapeIsDisregarded', t => {
+  const dim = job._getPageDimensions(micronDims, true)
   t.deepEqual(dim, {
     x: ExportJob.HTML_DPI * 12,
     y: ExportJob.HTML_DPI * 9
