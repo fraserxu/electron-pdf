@@ -35,7 +35,7 @@
   },
   "homepage": "https://github.com/fraserxu/electron-pdf",
   "devDependencies": {
-    "ava": "^0.17.0",
+    "ava": "^0.18.0",
     "jasmine": "^2.5.2",
     "standard": "^8.4.0",
     "tap-diff": "^0.1.1",
