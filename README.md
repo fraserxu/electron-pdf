@@ -185,12 +185,12 @@ If you are finding that the [event is not effective](https://github.com/fraserxu
     document.dispatchEvent(new Event('ready'))
   }, 25)
 
-  document.body.addEventListener('view-ready-ack', function(){
+  document.body.addEventListener('view-ready-acknowledged', function(){
     clearInterval(eventEmitInterval)
   })
 ```
 
-When the main process first receives your ready event it will emit a single acknowlegement on `document.body` with whatever event name you are using suffixed with `-ack`.  So the default would be `view-ready-ack`
+When the main process first receives your ready event it will emit a single acknowlegement on `document.body` with whatever event name you are using suffixed with `-acknowledged`.  So the default would be `view-ready-acknowledged`
 
 #### Observing your own event
 

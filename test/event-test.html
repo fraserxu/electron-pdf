@@ -30,13 +30,12 @@
 
   document.body.dispatchEvent(new CustomEvent('view-ready', {}))
 
-  /*  */
   var eventEmitInterval = setInterval(function () {
 //    document.dispatchEvent(new Event('ready'))
     document.body.dispatchEvent(new CustomEvent('view-ready', {}))
   }, 25)
 
-  document.body.addEventListener('view-ready-ack', function(){
+  document.body.addEventListener('view-ready-acknowledged', function(){
     clearInterval(eventEmitInterval)
   })
 
