@@ -178,7 +178,7 @@ document.body.dispatchEvent(new Event('view-ready'))
 
 **Warning:** It is possible that your application will be ready and emit the event before the main electron process has had a chance execute the javascript in the renderer process which listens for this event.  
 
-If you finding that the [event is not effective](https://github.com/fraserxu/electron-pdf/issues/169) and your page waits until the full timeout has occurred, then you should use `setInterval` to emit the event until it is acknowledged like so:
+If you are finding that the [event is not effective](https://github.com/fraserxu/electron-pdf/issues/169) and your page waits until the full timeout has occurred, then you should use `setInterval` to emit the event until it is acknowledged like so:
 
 ```javascript
   var eventEmitInterval = setInterval(function () {
@@ -190,7 +190,7 @@ If you finding that the [event is not effective](https://github.com/fraserxu/ele
   })
 ```
 
-When the main process first receives your ready event it will emit a single acknowlegement on `document.body` with whatever event name you are using suffixed with `-ack`.  So the default would be `ready-event-ack`
+When the main process first receives your ready event it will emit a single acknowlegement on `document.body` with whatever event name you are using suffixed with `-ack`.  So the default would be `view-ready-ack`
 
 #### Observing your own event
 
