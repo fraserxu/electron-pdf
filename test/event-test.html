@@ -28,10 +28,18 @@
   table.style.transformOrigin = 'top left'
   table.style.transform='scale(.8)'
 
-  setTimeout(function () {
+  document.body.dispatchEvent(new CustomEvent('view-ready', {}))
+
+  /*  */
+  var eventEmitInterval = setInterval(function () {
 //    document.dispatchEvent(new Event('ready'))
-    document.body.dispatchEvent(new CustomEvent('ready', {}))
-  }, 500)
+    document.body.dispatchEvent(new CustomEvent('view-ready', {}))
+  }, 25)
+
+  document.body.addEventListener('view-ready-ack', function(){
+    clearInterval(eventEmitInterval)
+  })
+
 
 </script>
 </body>
