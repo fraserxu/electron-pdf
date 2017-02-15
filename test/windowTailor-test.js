@@ -2,6 +2,7 @@ import { test } from 'ava'
 
 import Tailor from '../lib/windowTailor'
 
+const windowLetterDim = [816, 1056]
 const micronDims = {
   width: 304800,
   height: 228600
@@ -23,4 +24,27 @@ test('getPageDimensions_object_landscapeIsDisregarded', t => {
     x: Tailor.HTML_DPI * 12,
     y: Tailor.HTML_DPI * 9
   })
+})
+
+test('setWindowDimensions_returns undefined when size is unchanged', t => {
+  const win = {
+    getSize () { return windowLetterDim }
+  }
+  t.is(Tailor.setWindowDimensions(win, 'Letter', false), undefined)
+})
+
+test('setWindowDimensions_returns dimension object when size changed', t => {
+  t.plan(3)
+  const win = {
+    getSize () { return windowLetterDim },
+    setSize (x, y) {
+      t.is(x, windowLetterDim[1])
+      t.is(y, windowLetterDim[0])
+    }
+  }
+  const newDim = Tailor.setWindowDimensions(win, 'Letter', true)
+  // This is used to emit a change event, so it's important to validate
+  // these names exactly; should not be changed for backwards compatibility
+  const expected = {dimensions: {x: windowLetterDim[1], y: windowLetterDim[0]}}
+  t.deepEqual(newDim, expected)
 })
