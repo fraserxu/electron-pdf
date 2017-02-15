@@ -182,7 +182,7 @@ If you are finding that the [event is not effective](https://github.com/fraserxu
 
 ```javascript
   var eventEmitInterval = setInterval(function () {
-    document.dispatchEvent(new Event('view-ready'))
+    document.body.dispatchEvent(new Event('view-ready'))
   }, 25)
 
   document.body.addEventListener('view-ready-acknowledged', function(){
