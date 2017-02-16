@@ -23,6 +23,27 @@ test('constructor_input_singleString', t => {
   t.deepEqual(job.input, ['input'])
 })
 
+test('constructor_orientations derived from landscape arg', t => {
+  const options = {
+    landscape: true
+  }
+  let job = new ExportJob(['a', 'b'], '', options)
+  t.deepEqual(job.orientation, ['landscape', 'landscape'])
+})
+
+test('constructor_orientations are used when matches size of urls', t => {
+  const jobOptions = {
+    orientation: ['o1', 'o2']
+  }
+  let job = new ExportJob(['a', 'b'], '', {}, jobOptions)
+  t.deepEqual(job.orientation, ['o1', 'o2'])
+})
+
+test('constructor_orientations is portrait when landscape is not set', t => {
+  let job = new ExportJob('a', '', options)
+  t.deepEqual(job.orientation, ['portrait'])
+})
+
 // BrowserWindow Options
 test('getBrowserConfiguration_sessionPartitionForCookies', t => {
   const args = _.extend({cookies: []}, options)
