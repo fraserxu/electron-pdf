@@ -28,20 +28,20 @@ test('constructor_orientations derived from landscape arg', t => {
     landscape: true
   }
   let job = new ExportJob(['a', 'b'], '', options)
-  t.deepEqual(job.orientation, ['landscape', 'landscape'])
+  t.deepEqual(job.orientations, ['landscape', 'landscape'])
 })
 
 test('constructor_orientations are used when matches size of urls', t => {
   const jobOptions = {
-    orientation: ['o1', 'o2']
+    orientations: ['o1', 'o2']
   }
   let job = new ExportJob(['a', 'b'], '', {}, jobOptions)
-  t.deepEqual(job.orientation, ['o1', 'o2'])
+  t.deepEqual(job.orientations, ['o1', 'o2'])
 })
 
 test('constructor_orientations is portrait when landscape is not set', t => {
   let job = new ExportJob('a', '', options)
-  t.deepEqual(job.orientation, ['portrait'])
+  t.deepEqual(job.orientations, ['portrait'])
 })
 
 // BrowserWindow Options
