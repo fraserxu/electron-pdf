@@ -11,7 +11,7 @@ test('set loggers', t => {
   let msg
   // Can set only certain loggers, and let others use debug logging
   const loggers = {
-    'info': function () { msg = 'id ' + _.join(arguments, ' ') }
+    info: function () { msg = 'id ' + _.join(arguments, ' ') }
   }
   set(loggers)
   // all varargs should just get passed through and logged however the
