@@ -6,14 +6,9 @@ import validator from 'validator'
 
 import ExportJob from '../lib/exportJob'
 
-const micronDims = {
-  width: 304800,
-  height: 228600
-}
-
 const args = {}
 const options = {
-  pageSize: JSON.stringify(micronDims)
+  pageSize: 'Letter'
 }
 
 let job = new ExportJob(['input'], 'output.pdf', args, options)
@@ -26,6 +21,27 @@ let job = new ExportJob(['input'], 'output.pdf', args, options)
 test('constructor_input_singleString', t => {
   let job = new ExportJob('input', 'output.pdf', options)
   t.deepEqual(job.input, ['input'])
+})
+
+test('constructor_orientations derived from landscape arg', t => {
+  const options = {
+    landscape: true
+  }
+  let job = new ExportJob(['a', 'b'], '', options)
+  t.deepEqual(job.orientations, ['landscape', 'landscape'])
+})
+
+test('constructor_orientations are used when matches size of urls', t => {
+  const jobOptions = {
+    orientations: ['o1', 'o2']
+  }
+  let job = new ExportJob(['a', 'b'], '', {}, jobOptions)
+  t.deepEqual(job.orientations, ['o1', 'o2'])
+})
+
+test('constructor_orientations is portrait when landscape is not set', t => {
+  let job = new ExportJob('a', '', options)
+  t.deepEqual(job.orientations, ['portrait'])
 })
 
 // BrowserWindow Options
@@ -41,25 +57,6 @@ test('getBrowserConfiguration_sessionPartitionForCookies', t => {
 test('getBrowserConfiguration_noSessionPartitionUnlessCookies', t => {
   const config = job._getBrowserConfiguration(options)
   t.falsy(config.webPreferences.partition)
-})
-
-// Page Dimensions
-test('getPageDimensions_Letter_Portrait', t => {
-  const dim = job._getPageDimensions('Letter', false)
-  t.deepEqual(dim, {x: 816, y: 1056})
-})
-
-test('getPageDimensions_Letter_Landscape', t => {
-  const dim = job._getPageDimensions('Letter', true)
-  t.deepEqual(dim, {x: 1056, y: 816})
-})
-
-test('getPageDimensions_object_landscapeIsDisregarded', t => {
-  const dim = job._getPageDimensions(micronDims, true)
-  t.deepEqual(dim, {
-    x: ExportJob.HTML_DPI * 12,
-    y: ExportJob.HTML_DPI * 9
-  })
 })
 
 // File Generation
