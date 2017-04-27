@@ -242,7 +242,7 @@ available from the Electron API.  See the following options for usage.
                                  false - default
     -p | --pageSize            String - Can be A3, A4, A5, Legal, Letter, Tabloid or an Object containing height and width in microns
                                 "A4" - default
-    -l | --landscape           Boolean - true for landscape, false for portrait.
+    -l | --landscape           Boolean - true for landscape, false for portrait (don't pass a string on the CLI, just the `-l` flag)
                                  false - default
     -m | --marginsType          Integer - Specify the type of margins to use
                                  0 - default
@@ -252,8 +252,15 @@ available from the Electron API.  See the following options for usage.
     -w | --outputWait          Integer – Time to wait (in MS) between page load and PDF creation.  If used in conjunction with -e this will override the default timeout of 10 seconds
     -e | --waitForJSEvent      String - The name of the event to wait before PDF creation
                                'view-ready' - default
-    
+```
 
+CLI Usage
+-----    
+
+You can see some additional logging (if you're getting errors or unexpected output) by setting `DEBUG=electron*`
+For example: `DEBUG=electron* electron-pdf <input> <output> -l`
+
+```
   Usage
     $ electron-pdf <input> <output>
     $ electron-pdf <input> <output> -l
