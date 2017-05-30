@@ -16,7 +16,7 @@ Options
   -l | --landscape           Boolean - set this flag to print in landscape made, leave unset for portrait
   -m | --marginsType          Integer - Specify the type of margins to use
                                0 - default
-                               1 - none
+                               1 - none (electron-pdf default setting)
                                2 - minimum
   -d | --disableCache        Disable HTTP caching
   -w | --outputWait          Integer – Time to wait (in MS) between page load and PDF creation.  If used in conjunction with -e this will override the default timeout of 10 seconds
