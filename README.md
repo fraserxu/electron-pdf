@@ -245,9 +245,9 @@ available from the Electron API.  See the following options for usage.
     -l | --landscape           Boolean - true for landscape, false for portrait (don't pass a string on the CLI, just the `-l` flag)
                                  false - default
     -m | --marginsType          Integer - Specify the type of margins to use
-                                 0 - default
-                                 1 - none
-                                 2 - minimum
+                                 0 - default margins
+                                 1 - no margins (electron-pdf default setting)
+                                 2 - minimum margins
     -d | --disableCache        Disable HTTP caching
     -w | --outputWait          Integer – Time to wait (in MS) between page load and PDF creation.  If used in conjunction with -e this will override the default timeout of 10 seconds
     -e | --waitForJSEvent      String - The name of the event to wait before PDF creation
