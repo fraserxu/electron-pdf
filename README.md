@@ -235,7 +235,7 @@ available from the Electron API.  See the following options for usage.
     -o | --output              String - The path of the output PDF
     
     --browserConfig            String - A valid JSON String that will be parsed into the options passed to electron.BrowserWindow
-    -c | --css                 String - The path to custom CSS
+    -c | --css                 String - The path to custom CSS (can be specified more than once)
     -b | --printBackground     Boolean - Whether to print CSS backgrounds.
                                  false - default
     -s | --printSelectionOnly  Boolean - Whether to print selection only
