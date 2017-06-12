@@ -39,6 +39,7 @@
     "standard": "^8.4.0",
     "tap-diff": "^0.1.1",
     "tap-spec": "^4.1.1",
+    "then-fs": "^2.0.0",
     "validator": "^6.2.0"
   },
   "dependencies": {
