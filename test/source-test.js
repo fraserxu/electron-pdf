@@ -23,6 +23,13 @@ test('resolve() converts markdown to html', t => {
   })
 })
 
+test('resolve() does not attempt to convert weird urls', t => {
+  source.resolve(['https://www.google.com/?q=dr.+vs.+md'], {}).then(result => {
+    t.is(result.length, 1)
+    t.is(result[0], 'https://www.google.com/?q=dr.+vs.+md')
+  })
+})
+
 test('resolve() includes custom css file', async t => {
   t.plan(1)
 
