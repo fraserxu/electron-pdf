@@ -104,7 +104,7 @@ app.post('/pdfexport', function(req,res){
 
 #### Using an in memory Buffer
 
-If you set the `inMemory` setting to true, you must also set `closeWindow=true`
+If you set the `inMemory` setting to true, you must also set `closeWindow=false`
 or you will get a segmentation fault anytime the window is closed before the buffer 
 is sent on the response.  You then need to invoke `job.destroy` to close the window.
 
