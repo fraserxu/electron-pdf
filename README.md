@@ -244,6 +244,7 @@ available from the Electron API.  See the following options for usage.
     -i | --input               String - The path to the HTML file or url
     -o | --output              String - The path of the output PDF
     
+    --acceptLanguage           String - A valid value for the 'Accept-Language' http request header
     --browserConfig            String - A valid JSON String that will be parsed into the options passed to electron.BrowserWindow
     -c | --css                 String - The path to custom CSS (can be specified more than once)
     -b | --printBackground     Boolean - Whether to print CSS backgrounds.
