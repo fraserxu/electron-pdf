@@ -43,7 +43,7 @@ There is also an example docker machine [here](https://github.com/fraserxu/docke
 Node Usage
 -----
 Electron PDF can be used inside of an application, or more commonly as the engine for a pdf 
-rendering service.  For instance, to handle http requests using Express.  The following snipppets 
+rendering service.  For instance, to handle http requests using Express.  The following snippets 
 show you how you can get started.
 
 ### The application must run in an Electron process
