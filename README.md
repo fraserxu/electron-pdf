@@ -12,6 +12,16 @@ I have a blog post explain why [PDF Generation On The Web](https://fraserxu.me/2
 
 Production ready? See it in action for the [Myanmar Election](https://wiredcraft.com/blog/high-security-electron-js-application/)!
 
+Versioning
+-------
+Semantic Versioning is used, and corresponds to electron versions in the following way:
+- electron-pdf 1.2.x  =>  electron 1.4.x (Chrome 53, Node 6.5)
+- electron-pdf 1.3.x  =>  electron 1.6.x (Chrome 56, Node 7.4)
+- electron-pdf 1.4.x  =>  electron 1.7.x - Future branch TBD sometime after Electron 1.7 GA Release
+- electron-pdf 2.0.x  =>  electron 1.7.x+ - Future major release that will introduce some breaking changes
+
+Note: The Chromium versions employed by electron have impacts based on the functionality you may be exporting.  Choose which ever minor version you need based on Chrome
+
 Install
 -------
 
@@ -33,7 +43,7 @@ There is also an example docker machine [here](https://github.com/fraserxu/docke
 Node Usage
 -----
 Electron PDF can be used inside of an application, or more commonly as the engine for a pdf 
-rendering service.  For instance, to handle http requests using Express.  The following snipppets 
+rendering service.  For instance, to handle http requests using Express.  The following snippets 
 show you how you can get started.
 
 ### The application must run in an Electron process
@@ -94,7 +104,7 @@ app.post('/pdfexport', function(req,res){
 
 #### Using an in memory Buffer
 
-If you set the `inMemory` setting to true, you must also set `closeWindow=true`
+If you set the `inMemory` setting to true, you must also set `closeWindow=false`
 or you will get a segmentation fault anytime the window is closed before the buffer 
 is sent on the response.  You then need to invoke `job.destroy` to close the window.
 
@@ -234,26 +244,37 @@ available from the Electron API.  See the following options for usage.
     -i | --input               String - The path to the HTML file or url
     -o | --output              String - The path of the output PDF
     
+    --acceptLanguage           String - A valid value for the 'Accept-Language' http request header
     --browserConfig            String - A valid JSON String that will be parsed into the options passed to electron.BrowserWindow
-    -c | --css                 String - The path to custom CSS
+    -c | --css                 String - The path to custom CSS (can be specified more than once)
     -b | --printBackground     Boolean - Whether to print CSS backgrounds.
                                  false - default
     -s | --printSelectionOnly  Boolean - Whether to print selection only
                                  false - default
     -p | --pageSize            String - Can be A3, A4, A5, Legal, Letter, Tabloid or an Object containing height and width in microns
                                 "A4" - default
-    -l | --landscape           Boolean - true for landscape, false for portrait.
+    -l | --landscape           Boolean - true for landscape, false for portrait (don't pass a string on the CLI, just the `-l` flag)
                                  false - default
     -m | --marginsType          Integer - Specify the type of margins to use
-                                 0 - default
-                                 1 - none
-                                 2 - minimum
+                                 0 - default margins
+                                 1 - no margins (electron-pdf default setting)
+                                 2 - minimum margins
     -d | --disableCache        Disable HTTP caching
     -w | --outputWait          Integer – Time to wait (in MS) between page load and PDF creation.  If used in conjunction with -e this will override the default timeout of 10 seconds
     -e | --waitForJSEvent      String - The name of the event to wait before PDF creation
                                'view-ready' - default
-    
+    -t | --trustRemoteContent  Boolean - Whether to trust remote content loaded in the Electron webview.  False by default.                               
+```
 
+Find more information on [Electron Security here](https://github.com/electron/electron/blob/master/docs/tutorial/security.md).
+
+CLI Usage
+-----    
+
+You can see some additional logging (if you're getting errors or unexpected output) by setting `DEBUG=electron*`
+For example: `DEBUG=electron* electron-pdf <input> <output> -l`
+
+```
   Usage
     $ electron-pdf <input> <output>
     $ electron-pdf <input> <output> -l
