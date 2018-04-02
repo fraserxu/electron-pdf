@@ -263,7 +263,10 @@ available from the Electron API.  See the following options for usage.
     -w | --outputWait          Integer – Time to wait (in MS) between page load and PDF creation.  If used in conjunction with -e this will override the default timeout of 10 seconds
     -e | --waitForJSEvent      String - The name of the event to wait before PDF creation
                                'view-ready' - default
+    -t | --trustRemoteContent  Boolean - Whether to trust remote content loaded in the Electron webview.  False by default.                               
 ```
+
+Find more information on [Electron Security here](https://github.com/electron/electron/blob/master/docs/tutorial/security.md).
 
 CLI Usage
 -----    
