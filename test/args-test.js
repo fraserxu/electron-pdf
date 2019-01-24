@@ -113,3 +113,10 @@ test('http url with no query string replacing arguments in URL', t => {
   const newUrl = Args.urlWithArgs(url, args)
   t.deepEqual(newUrl, 'http://electronpdf.com/test/file.html#%7B%7D')
 })
+
+test('https url', t => {
+  const url = 'https://electronpdf.com/test/file.html#!/123'
+  const args = {}
+  const newUrl = Args.urlWithArgs(url, args)
+  t.deepEqual(newUrl, 'https://electronpdf.com/test/file.html#%7B%7D')
+})
