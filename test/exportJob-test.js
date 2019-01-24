@@ -1,4 +1,4 @@
-import {test} from 'ava'
+import { test } from 'ava'
 
 import _ from 'lodash'
 
@@ -46,7 +46,7 @@ test('constructor_orientations is portrait when landscape is not set', t => {
 
 // BrowserWindow Options
 test('getBrowserConfiguration_sessionPartitionForCookies', t => {
-  const args = _.extend({cookies: []}, options)
+  const args = _.extend({ cookies: [] }, options)
 
   const config = job._getBrowserConfiguration(args)
 
@@ -106,7 +106,7 @@ test.cb('handlePDF_electronError', t => {
 
 test.cb('handlePDF_inMemory', t => {
   // Arrange
-  const opts = _.extend({}, options, {inMemory: true})
+  const opts = _.extend({}, options, { inMemory: true })
   const inMemJob = new ExportJob(['input'], 'output.pdf', {}, opts)
   let windowEventData
   inMemJob.on('window.capture.end', (event) => {

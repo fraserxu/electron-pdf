@@ -10,12 +10,12 @@ const micronDims = {
 
 test('getPageDimensions_Letter_Portrait', t => {
   const dim = Tailor.getPageDimensions('Letter', false)
-  t.deepEqual(dim, {x: 816, y: 1056})
+  t.deepEqual(dim, { x: 816, y: 1056 })
 })
 
 test('getPageDimensions_Letter_Landscape', t => {
   const dim = Tailor.getPageDimensions('Letter', true)
-  t.deepEqual(dim, {x: 1056, y: 816})
+  t.deepEqual(dim, { x: 1056, y: 816 })
 })
 
 test('getPageDimensions_object_landscapeIsDisregarded', t => {
@@ -45,6 +45,6 @@ test('setWindowDimensions_returns dimension object when size changed', t => {
   const newDim = Tailor.setWindowDimensions(win, 'Letter', true)
   // This is used to emit a change event, so it's important to validate
   // these names exactly; should not be changed for backwards compatibility
-  const expected = {dimensions: {x: windowLetterDim[1], y: windowLetterDim[0]}}
+  const expected = { dimensions: { x: windowLetterDim[1], y: windowLetterDim[0] } }
   t.deepEqual(newDim, expected)
 })
