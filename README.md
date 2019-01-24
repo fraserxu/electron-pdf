@@ -14,13 +14,15 @@ Production ready? See it in action for the [Myanmar Election](https://wiredcraft
 
 Versioning
 -------
-Semantic Versioning is used, and corresponds to electron versions in the following way:
-- electron-pdf 1.2.x  =>  electron 1.4.x (Chrome 53, Node 6.5)
-- electron-pdf 1.3.x  =>  electron 1.6.x (Chrome 56, Node 7.4)
-- electron-pdf 1.4.x  =>  electron 1.7.x - Future branch TBD sometime after Electron 1.7 GA Release
-- electron-pdf 2.0.x  =>  electron 1.7.x+ - Future major release that will introduce some breaking changes
+Starting with version 4.0.x the master branch will always have the latest electron version.
 
-Note: The Chromium versions employed by electron have impacts based on the functionality you may be exporting.  Choose which ever minor version you need based on Chrome
+Semantic Versioning is used, and corresponds to electron versions in the following way:
+- electron-pdf 4.0.x  =>  electron 4.0.x (Chromium 69, Node 10.11.0)
+- electron-pdf 1.3.x  =>  electron 1.6.x (Chromium 56, Node 7.4)
+- electron-pdf 1.2.x  =>  electron 1.4.x (Chromium 53, Node 6.5)
+
+Note: The Chromium versions employed by electron have impacts based on the functionality you may be exporting.  
+Choose the version you need based on Chromium.
 
 Install
 -------

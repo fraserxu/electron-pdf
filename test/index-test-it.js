@@ -1,4 +1,4 @@
-import {test} from 'ava'
+import { test } from 'ava'
 
 // var path = require('path')
 // var spawn = require('child_process').spawn
