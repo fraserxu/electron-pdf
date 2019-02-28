@@ -1,4 +1,4 @@
-import { test } from 'ava'
+import { beforeEach, test } from 'ava'
 
 import _ from 'lodash'
 
@@ -6,12 +6,15 @@ import validator from 'validator'
 
 import ExportJob from '../lib/exportJob'
 
-const args = {}
-const options = {
-  pageSize: 'Letter'
-}
+let job, args, options
 
-let job = new ExportJob(['input'], 'output.pdf', args, options)
+beforeEach(() => {
+  args = {}
+  options = {
+    pageSize: 'Letter'
+  }
+  job = new ExportJob(['input'], 'output.pdf', args, options)
+})
 
 // Construction
 /**
@@ -92,6 +95,34 @@ test('setSessionCookie_multiple', t => {
     name: 'JSESSIONID',
     value: 'bar'
   })
+})
+
+// Header Tests
+test('_getHeaders all possible headers', t => {
+  args.acceptLanguage = 'en'
+  args.disableCache = true
+  args.requestHeaders = `{"H1": "V1", "H2": "V2"}`
+  const headers = job._getHeaders()
+  const expected = [
+    'Accept-Language: en',
+    'pragma: no-cache',
+    'H1: V1',
+    'H2: V2'
+  ]
+  t.deepEqual(headers, expected)
+})
+
+test('_getHeaders --requestHeaders single value only', t => {
+  args.requestHeaders = `{"H1": "V1"}`
+  const headers = job._getHeaders()
+  const expected = ['H1: V1']
+  t.deepEqual(headers, expected)
+})
+
+test('_getHeaders empty', t => {
+  const headers = job._getHeaders()
+  const expected = []
+  t.deepEqual(headers, expected)
 })
 
 // PDF Completion Tests
