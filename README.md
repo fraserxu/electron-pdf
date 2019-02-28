@@ -255,6 +255,8 @@ available from the Electron API.  See the following options for usage.
                                  false - default
     -p | --pageSize            String - Can be A3, A4, A5, Legal, Letter, Tabloid or an Object containing height and width in microns
                                 "A4" - default
+    -r | --requestHeaders      String - A valid JSON String that will be parsed into an Object where each key/value pair is: <headerName>: <headerValue>
+                                 Example: '{"Authorization": "Bearer token", "X-Custom-Header": "Hello World"}'  
     -l | --landscape           Boolean - true for landscape, false for portrait (don't pass a string on the CLI, just the `-l` flag)
                                  false - default
     -m | --marginsType          Integer - Specify the type of margins to use
