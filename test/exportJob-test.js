@@ -119,6 +119,12 @@ test('_getHeaders --requestHeaders single value only', t => {
   t.deepEqual(headers, expected)
 })
 
+test('_getHeaders empty', t => {
+  const headers = job._getHeaders()
+  const expected = []
+  t.deepEqual(headers, expected)
+})
+
 // PDF Completion Tests
 
 test.cb('handlePDF_electronError', t => {
