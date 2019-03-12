@@ -57,9 +57,10 @@ test('getBrowserConfiguration_sessionPartitionForCookies', t => {
   t.true(validator.isUUID(partition), 'partition should be a UUID')
 })
 
-test('getBrowserConfiguration_noSessionPartitionUnlessCookies', t => {
+test('getBrowserConfiguration_SessionPartitionWithoutCookies', t => {
   const config = job._getBrowserConfiguration(options)
-  t.falsy(config.webPreferences.partition)
+  const partition = config.webPreferences.partition
+  t.true(validator.isUUID(partition), 'partition should be a UUID')
 })
 
 // File Generation
