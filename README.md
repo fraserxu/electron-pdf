@@ -28,7 +28,7 @@ Install
 -------
 
 ```
-npm install electron-pdf -g
+sudo npm install electron-pdf -g --unsafe-perm
 ```
 
 For gnu/linux installations without a graphical environment:
