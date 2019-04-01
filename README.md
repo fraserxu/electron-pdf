@@ -28,12 +28,17 @@ Install
 -------
 
 ```
-`sudo npm install electron-pdf -g`
-
-Note: If you're installing electron-pdf using the system level npm (vs a user-level install like with NVM) then you may need to run the following command instead:
-`sudo npm install electron-pdf -g --unsafe-perm`
-Please see [the npm docs](https://docs.npmjs.com/misc/config#unsafe-perm) for more information.
+npm install electron-pdf
 ```
+
+Note: If you're installing electron-pdf as root using the system level npm (vs a user-level install like with NVM) then you may need to run the following command instead:
+
+```
+sudo npm install electron-pdf -g --unsafe-perm
+```
+
+Please see [the npm docs](https://docs.npmjs.com/misc/config#unsafe-perm) for more information.
+
 
 For gnu/linux installations without a graphical environment:
 
