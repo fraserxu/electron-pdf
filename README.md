@@ -281,6 +281,17 @@ available from the Electron API.  See the following options for usage.
 
 Find more information on [Electron Security here](https://github.com/electron/electron/blob/master/docs/tutorial/security.md).
 
+Debugging
+-----
+
+## Sentry
+If you have a [Sentry](https://sentry.io) account and setup a new app to get a new DSN, you can set a `SENTRY_DSN` environment variable which will activate sentry logs.
+See `lib/sentry.js` for implementation details.
+
+This will allow you to easily see/monitor errors that are occuring inside of the Chromium render (browser window).
+It also automatically integrates with Electron's [Crash Reporter](https://electronjs.org/docs/api/crash-reporter)
+
+
 CLI Usage
 -----    
 
