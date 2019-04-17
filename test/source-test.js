@@ -1,29 +1,29 @@
-import { test } from 'ava'
+import test from 'ava'
 
 var Source = require('../lib/source')
 var source = new Source()
 var fs = require('then-fs')
 
-test('resolve() handles a string', t => {
+test('resolve() handles a string', async t => {
   source.resolve('http://www.google.com').then(result => {
     t.is(result[0], 'http://www.google.com')
   })
 })
 
-test('resolve() handles arrays of strings', t => {
+test('resolve() handles arrays of strings', async t => {
   source.resolve(['http://www.google.com', 'local.html']).then(result => {
     t.is(result.length, 2)
   })
 })
 
-test('resolve() converts markdown to html', t => {
+test('resolve() converts markdown to html', async t => {
   source.resolve(['./README.md'], {}).then(result => {
     t.is(result.length, 1)
     t.truthy(result[0].endsWith('.html'))
   })
 })
 
-test('resolve() does not attempt to convert weird urls', t => {
+test('resolve() does not attempt to convert weird urls', async t => {
   source.resolve(['https://www.google.com/?q=dr.+vs.+md'], {}).then(result => {
     t.is(result.length, 1)
     t.is(result[0], 'https://www.google.com/?q=dr.+vs.+md')

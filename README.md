@@ -252,31 +252,51 @@ available from the Electron API.  See the following options for usage.
   Options
     --help                     Show this help
     --version                  Current version of package
+    
     -i | --input               String - The path to the HTML file or url
     -o | --output              String - The path of the output PDF
     
-    --acceptLanguage           String - A valid value for the 'Accept-Language' http request header
-    --browserConfig            String - A valid JSON String that will be parsed into the options passed to electron.BrowserWindow
-    -c | --css                 String - The path to custom CSS (can be specified more than once)
     -b | --printBackground     Boolean - Whether to print CSS backgrounds.
+    
+    --acceptLanguage           String - A valid value for the 'Accept-Language' http request header
+    
+    --browserConfig            String - A valid JSON String that will be parsed into the options passed to electron.BrowserWindow
+    
+    -c | --css                 String - The path to custom CSS (can be specified more than once)
+    
+    -d | --disableCache        Disable HTTP caching
                                  false - default
-    -s | --printSelectionOnly  Boolean - Whether to print selection only
-                                 false - default
-    -p | --pageSize            String - Can be A3, A4, A5, Legal, Letter, Tabloid or an Object containing height and width in microns
-                                "A4" - default
-    -r | --requestHeaders      String - A valid JSON String that will be parsed into an Object where each key/value pair is: <headerName>: <headerValue>
-                                 Example: '{"Authorization": "Bearer token", "X-Custom-Header": "Hello World"}'  
+    
+    -e | --waitForJSEvent      String - The name of the event to wait before PDF creation
+                                 'view-ready' - default
+    
     -l | --landscape           Boolean - true for landscape, false for portrait (don't pass a string on the CLI, just the `-l` flag)
                                  false - default
-    -m | --marginsType          Integer - Specify the type of margins to use
+    
+    -m | --marginsType         Integer - Specify the type of margins to use
                                  0 - default margins
                                  1 - no margins (electron-pdf default setting)
                                  2 - minimum margins
-    -d | --disableCache        Disable HTTP caching
-    -w | --outputWait          Integer – Time to wait (in MS) between page load and PDF creation.  If used in conjunction with -e this will override the default timeout of 10 seconds
-    -e | --waitForJSEvent      String - The name of the event to wait before PDF creation
-                               'view-ready' - default
+    
+    --noprint                  Boolean - Do not run printToPDF, useful if the page downloads a file that needs captured instead of a PDF.  
+                                         The Electron `win.webContents.session.on('will-download')` event will be implemented 
+                                         and the file saved to the location provided in `--output`.
+                                         Currently only supports a single import url.
+                                         The page is responsible for initiating the download itself.
+    
+    -p | --pageSize            String - Can be A3, A4, A5, Legal, Letter, Tabloid or an Object containing height and width in microns
+                                 "A4" - default
+    
+    -r | --requestHeaders      String - A valid JSON String that will be parsed into an Object where each key/value pair is: <headerName>: <headerValue>
+                                 Example: '{"Authorization": "Bearer token", "X-Custom-Header": "Hello World"}'  
+    
+    -s | --printSelectionOnly  Boolean - Whether to print selection only
+                                 false - default
+                                 
     -t | --trustRemoteContent  Boolean - Whether to trust remote content loaded in the Electron webview.  False by default.                               
+    
+    -w | --outputWait          Integer – Time to wait (in MS) between page load and PDF creation.  
+                                         If used in conjunction with -e this will override the default timeout of 10 seconds    
 ```
 
 Find more information on [Electron Security here](https://github.com/electron/electron/blob/master/docs/tutorial/security.md).
