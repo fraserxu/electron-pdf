@@ -1,4 +1,4 @@
-import { test } from 'ava'
+import test from 'ava'
 
 import Args from '../lib/args'
 
@@ -49,13 +49,6 @@ test('file with query string replacing arguments from URL', t => {
   const args = {}
   const newUrl = Args.urlWithArgs(url, args)
   t.deepEqual(newUrl, 'file:///test/file.html?p=hello&n=world#%7B%7D')
-})
-
-test('file with no query string and with arguments in URL', t => {
-  const url = '/test/file.html#!/123'
-  const args = null
-  const newUrl = Args.urlWithArgs(url, args)
-  t.deepEqual(newUrl, 'file:///test/file.html#!/123')
 })
 
 test('http url with query string and arguments', t => {

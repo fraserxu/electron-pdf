@@ -1,4 +1,4 @@
-import { beforeEach, test } from 'ava'
+import test from 'ava'
 
 import _ from 'lodash'
 
@@ -8,7 +8,7 @@ import ExportJob from '../lib/exportJob'
 
 let job, args, options
 
-beforeEach(() => {
+test.beforeEach(() => {
   args = {}
   options = {
     pageSize: 'Letter'
@@ -99,7 +99,7 @@ test('setSessionCookie_multiple', t => {
 })
 
 // Header Tests
-test('_getHeaders all possible headers', t => {
+test.only('_getHeaders all possible headers', t => {
   args.acceptLanguage = 'en'
   args.disableCache = true
   args.requestHeaders = `{"H1": "V1", "H2": "V2"}`
