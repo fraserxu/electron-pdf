@@ -5,6 +5,7 @@ var electronPath = require('electron')
 
 var args = process.argv.slice(2)
 
+args.unshift('--')
 args.unshift(path.resolve(path.join(__dirname, './lib/charge.js')))
 
 var electron = spawn(electronPath, args, {
