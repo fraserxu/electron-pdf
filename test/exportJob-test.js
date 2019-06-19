@@ -105,18 +105,10 @@ test.only('_getHeaders all possible headers', t => {
   args.requestHeaders = `{"H1": "V1", "H2": "V2"}`
   const headers = job._getHeaders()
   const expected = [
-    'Accept-Language: en',
     'pragma: no-cache',
     'H1: V1',
     'H2: V2'
   ]
-  t.deepEqual(headers, expected)
-})
-
-test('_getHeaders --requestHeaders single value only', t => {
-  args.requestHeaders = `{"H1": "V1"}`
-  const headers = job._getHeaders()
-  const expected = ['H1: V1']
   t.deepEqual(headers, expected)
 })
 
