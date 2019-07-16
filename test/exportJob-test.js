@@ -65,14 +65,26 @@ test('getBrowserConfiguration_SessionPartitionWithoutCookies', t => {
 
 // File Generation
 test('getTargetFile', t => {
-  const fileName = job._getTargetFile(2)
+  const fileName = job._getTargetFile({ inputIndex: 2 })
   t.is(fileName, 'output.pdf')
 })
 
 test('getTargetFile_multiple_inputs', t => {
   job = new ExportJob(['input1', 'input2'], 'output.pdf', options)
-  const fileName = job._getTargetFile(1)
+  const fileName = job._getTargetFile({ inputIndex: 1 })
   t.is(fileName, 'output_2.pdf')
+})
+
+test('getTargetFile_png_override', t => {
+  job = new ExportJob(['input1', 'input2'], 'output.pdf', options)
+  const fileName = job._getTargetFile({ inputIndex: 1, type: 'png' })
+  t.is(fileName, 'output_2.png')
+})
+
+test('getTargetFile_png_override_single', t => {
+  job = new ExportJob(['input1'], 'output.pdf', options)
+  const fileName = job._getTargetFile({ inputIndex: 1, type: 'png' })
+  t.is(fileName, 'output.png')
 })
 
 // Cookie Tests
@@ -99,7 +111,7 @@ test('setSessionCookie_multiple', t => {
 })
 
 // Header Tests
-test.only('_getHeaders all possible headers', t => {
+test('_getHeaders all possible headers', t => {
   args.acceptLanguage = 'en'
   args.disableCache = true
   args.requestHeaders = `{"H1": "V1", "H2": "V2"}`
