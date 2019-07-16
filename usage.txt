@@ -25,6 +25,7 @@ Options
                                'view-ready' - default
   -t | --trustRemoteContent  Boolean - Trust remote content loaded in the Electron webview.
                                false - default
+  --type                     String - The type of export, will dictate the output file type.  'png': PNG image, anything else: PDF File
 
 Usage
   $ electron-pdf <input> <output>

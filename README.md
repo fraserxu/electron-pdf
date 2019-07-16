@@ -226,18 +226,30 @@ document.body.dispatchEvent(new CustomEvent('view-ready', { detail: {layout: lan
 ```
 
 ##### your-exporter.js
-As an example, suppose you wanted to change the orientation of the PDF
+You are required to provide a function that accepts the `detail` object from 
+the CustomEvent and returns a Promise.  You may optionally fulfill the promise with 
+and object that will amend/override any of the contextual attributes assigned to resource (url)
+currently being exported.
+
+As an example, suppose you wanted to change the orientation of the PDF,
+and capture the output as PNG instead of a PDF.
 
 ```javascript
 job.observeReadyEvent( (detail) => {
     return new Promise( (resolve,reject) => {
+      const context = {}
       if( detail && detail.landscape ){
         job.changeArgValue('landscape', true)
+        context.type = 'png'
       }
-      resolve()
+      resolve(context)
     })
 })
 ```
+
+Note: Future versions of the library will only allow you to provide context overrides, 
+and not allow you to change job level attributes.
+
 
 All Available Options
 -----
@@ -293,7 +305,8 @@ available from the Electron API.  See the following options for usage.
     -s | --printSelectionOnly  Boolean - Whether to print selection only
                                  false - default
                                  
-    -t | --trustRemoteContent  Boolean - Whether to trust remote content loaded in the Electron webview.  False by default.                               
+    -t | --trustRemoteContent  Boolean - Whether to trust remote content loaded in the Electron webview.  False by default.
+    --type                     String - The type of export, will dictate the output file type.  'png': PNG image, anything else: PDF File
     
     -w | --outputWait          Integer – Time to wait (in MS) between page load and PDF creation.  
                                          If used in conjunction with -e this will override the default timeout of 10 seconds    
