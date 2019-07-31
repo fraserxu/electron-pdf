@@ -57,7 +57,7 @@
   },
   "ava": {
     "concurrency": 5,
-    "timeout": "1s",
+    "timeout": "5s",
     "failFast": true,
     "tap": true,
     "powerAssert": false
