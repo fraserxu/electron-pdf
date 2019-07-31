@@ -1,6 +1,6 @@
 {
   "name": "electron-pdf",
-  "version": "4.0.7",
+  "version": "4.0.8",
   "description": "A command line tool to generate PDF from URL, HTML or Markdown files",
   "main": "lib/index.js",
   "scripts": {
@@ -57,6 +57,7 @@
   },
   "ava": {
     "concurrency": 5,
+    "timeout": "1s",
     "failFast": true,
     "tap": true,
     "powerAssert": false

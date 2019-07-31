@@ -162,6 +162,15 @@ test.cb('handlePDF_inMemory', t => {
   inMemJob._handlePDF('output.pdf', cb, err, data)
 })
 
+test.cb(`_waitForPage with --noprint adds no wait and invokes generate function immediately`, t => {
+  args.noprint = true
+
+  // generateFn being called immediately is what we're verifying
+  const generateFn = () => t.end()
+
+  job._waitForPage(undefined, generateFn, 10000)
+})
+
 // Support Functions
 /**
  * Stubs the windows.sessionn.cookies object and provides access
