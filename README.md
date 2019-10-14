@@ -310,6 +310,7 @@ available from the Electron API.  See the following options for usage.
     
     -w | --outputWait          Integer – Time to wait (in MS) between page load and PDF creation.  
                                          If used in conjunction with -e this will override the default timeout of 10 seconds    
+    -ignoreCertificateErrors  Boolean - Whether to accept self-signed and untrusted certificates
 ```
 
 Find more information on [Electron Security here](https://github.com/electron/electron/blob/master/docs/tutorial/security.md).
