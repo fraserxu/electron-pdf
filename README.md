@@ -6,7 +6,7 @@ electron-pdf
 [![Downloads][downloads-image]][downloads-url]
 [![js-standard-style][standard-image]][standard-url]
 
-A command line tool to generate PDF from URL, HTML or Markdown files with [electron](http://electron.atom.io/).
+A command line tool to generate PDF from URL, HTML or Markdown files with [electron](https://www.electronjs.org/).
 
 I have a blog post explain why [PDF Generation On The Web](https://fraserxu.me/2015/08/20/pdf-generation-on-the-web/)
 
@@ -377,7 +377,7 @@ MIT
 [npm-url]: https://npmjs.org/package/electron-pdf
 [travis-image]: https://img.shields.io/travis/fraserxu/electron-pdf/master.svg?style=flat-square
 [travis-url]: https://travis-ci.org/fraserxu/electron-pdf
-[downloads-image]: http://img.shields.io/npm/dm/electron-pdf.svg?style=flat-square
+[downloads-image]: https://img.shields.io/npm/dm/electron-pdf.svg?style=flat-square
 [downloads-url]: https://npmjs.org/package/electron-pdf
 [standard-image]: https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat-square
 [standard-url]: https://github.com/feross/standard
