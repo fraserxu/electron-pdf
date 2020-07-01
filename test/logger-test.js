@@ -5,7 +5,7 @@ import _ from 'lodash'
 import { set, info } from '../lib/logger'
 
 /**
- * Shows usage for clients, and validates tha it works!
+ * Shows usage for clients, and validates that it works!
  */
 test('set loggers', t => {
   let msg
