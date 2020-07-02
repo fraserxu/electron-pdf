@@ -277,7 +277,7 @@ available from the Electron API.  See the following options for usage.
     
     -c | --css                 String - The path to custom CSS (can be specified more than once)
     
-    -d | --disableCache        Disable HTTP caching
+    -d | --disableCache        Boolean - Disable HTTP caching
                                  false - default
     
     -e | --waitForJSEvent      String - The name of the event to wait before PDF creation
