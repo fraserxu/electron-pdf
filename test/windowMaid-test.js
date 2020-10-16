@@ -9,6 +9,7 @@ test('_cleanupHungWindows cleans up non destroyed window', t => {
   let job = {
     id: 'jobId',
     window: { id: 1, isDestroyed: () => false },
+    options: {},
     emit: (event, context) => {
       t.is(event, 'window.termination')
     },
@@ -26,6 +27,7 @@ test('_cleanupHungWindows handles destroyed window', t => {
   let job = {
     id: 'jobId',
     window: { id: 1, isDestroyed: () => true },
+    options: {},
     emit: (event, context) => {
       t.fail('no events were expected')
     },
