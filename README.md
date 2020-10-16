@@ -136,6 +136,14 @@ exporter.createJob(source, target, options, jobOptions).then( job => {
 The API is designed to emit noteworthy events rather than use callbacks.
 Full documentation of all events is a work in progress.
 
+## Environment Variables
+
+- `ELECTRONPDF_RENDERER_MAX_MEMORY` : The --max-old-space-size option for each Electron renderer process (browser window); default: `75% of total system memory up to 8GB`
+- `ELECTRONPDF_WINDOW_CLEANUP_INTERVAL` : Interval for which to check for hung windows, in milliseconds; default: `30 seconds`
+- `ELECTRONPDF_WINDOW_LIFE_THRESHOLD` : How long a window can remain open before it is terminated, in milliseconds; default: `5 minutes`
+- `ELECTRONPDF_PNG_CAPTURE_DELAY` : Amount of millis to wait before invoking WebContents.capturePage for PNG exports; default: `100ms`
+
+
 Command Line Usage
 -----
 
