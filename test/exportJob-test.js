@@ -70,19 +70,27 @@ test('getTargetFile', t => {
 })
 
 test('getTargetFile_multiple_inputs', t => {
-  job = new ExportJob(['input1', 'input2'], 'output.pdf', options)
+  job = new ExportJob(['input1', 'input2'], 'output.pdf', args, options)
   const fileName = job._getTargetFile({ inputIndex: 1 })
   t.is(fileName, 'output_2.pdf')
 })
 
 test('getTargetFile_png_override', t => {
-  job = new ExportJob(['input1', 'input2'], 'output.pdf', options)
+  job = new ExportJob(['input1', 'input2'], 'output.pdf', args, options)
   const fileName = job._getTargetFile({ inputIndex: 1, type: 'png' })
   t.is(fileName, 'output_2.png')
 })
 
+test('getTargetFile_fileSuffixFn', t => {
+  job = new ExportJob(['input1', 'input2'], 'output.pdf', args, _.extend({
+    fileSuffixFn: index => `_0000${index}`
+  }, options))
+  const fileName = job._getTargetFile({ inputIndex: 1 })
+  t.is(fileName, 'output_00002.pdf')
+})
+
 test('getTargetFile_png_override_single', t => {
-  job = new ExportJob(['input1'], 'output.pdf', options)
+  job = new ExportJob(['input1'], 'output.pdf', args, options)
   const fileName = job._getTargetFile({ inputIndex: 1, type: 'png' })
   t.is(fileName, 'output.png')
 })
