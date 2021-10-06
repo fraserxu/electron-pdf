@@ -17,7 +17,8 @@ Versioning
 Starting with version 4.0.x the master branch will always have the latest electron version.
 
 Semantic Versioning is used, and corresponds to electron versions in the following way:
-- electron-pdf 10.0.x (master) => electron=10.1.3, node=12.16.3, chrome=85.0.4183.121
+- electron-pdf 15.0.x (master) => electron=15.1.1, node=16.5.0, chrome=94.0.4606.61
+- electron-pdf 10.0.x =>  electron=10.1.3, node=12.16.3, chrome=85.0.4183.121
 - electron-pdf 7.0.x  =>  electron 7.x (Chromium 78, Node 12.8.1)
 - electron-pdf 4.0.x  =>  electron 4.x (Chromium 69, Node 10.11.0)
 - electron-pdf 1.3.x  =>  electron 1.6.x (Chromium 56, Node 7.4)
