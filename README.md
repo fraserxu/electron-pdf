@@ -8,10 +8,6 @@ electron-pdf
 
 A command line tool to generate PDF from URL, HTML or Markdown files with [electron](https://www.electronjs.org/).
 
-I have a blog post explain why [PDF Generation On The Web](https://fraserxu.me/2015/08/20/pdf-generation-on-the-web/)
-
-Production ready? See it in action for the [Myanmar Election](https://wiredcraft.com/blog/high-security-electron-js-application/)!
-
 Versioning
 -------
 Starting with version 4.0.x the master branch will always have the latest electron version.
