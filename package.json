@@ -43,7 +43,7 @@
   },
   "dependencies": {
     "@sentry/electron": "^1.5.2",
-    "async": "^2.0.1",
+    "async": "^3.2.2",
     "debug": "^2.3.2",
     "electron": "^15.1.1",
     "eventemitter2": "^2.1.3",
