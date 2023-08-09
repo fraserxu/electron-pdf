@@ -1,5 +1,3 @@
-Sure, I've re-written the README for you:
-
 ## Electron-PDF
 
 [![NPM version][npm-image]][npm-url]
