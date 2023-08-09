@@ -1,18 +1,42 @@
-electron-pdf
-============
+## Electron-PDF
 
 [![NPM version][npm-image]][npm-url]
-[![build status][travis-image]][travis-url]
+[![Build status][travis-image]][travis-url]
 [![Downloads][downloads-image]][downloads-url]
 [![js-standard-style][standard-image]][standard-url]
 
-A command line tool to generate PDF from URL, HTML or Markdown files with [electron](https://www.electronjs.org/).
+Electron-PDF is a powerful command-line tool that leverages [Electron](https://www.electronjs.org/) to generate PDF files from URLs, HTML, or Markdown files.
 
-Versioning
--------
-Starting with version 4.0.x the master branch will always have the latest electron version.
+## Table of Contents
 
-Semantic Versioning is used, and corresponds to electron versions in the following way:
+- [Electron-PDF](#electron-pdf)
+- [Version Compatibility](#version-compatibility)
+- [Installation](#installation)
+- [Node.js Usage](#nodejs-usage)
+  - [Application Setup](#application-setup)
+  - [Using Electron-PDF](#using-electron-pdf)
+  - [Handling Multiple Export Jobs](#handling-multiple-export-jobs)
+  - [Using In-Memory Buffer](#using-in-memory-buffer)
+- [Events](#events)
+- [Environment Variables](#environment-variables)
+- [Command Line Usage](#command-line-usage)
+- [Rendering Options](#rendering-options)
+  - [To specify browser options](#to-specify-browser-options)
+  - [Observing your own event](#observing-your-own-event)
+- [All Available Options](#all-available-options)
+- [Debugging](#debugging)
+  - [Sentry](#sentry)
+  - [CLI Usage](#cli-usage)
+  - [Other Formats](#other-formats)
+  - [Extensions](#extensions)
+- [License](#license)
+
+### Version Compatibility
+
+Starting from version 4.0.x, the master branch of Electron-PDF will always align with the latest Electron version.
+
+Semantic Versioning is followed, and the version numbers correspond to Electron versions as follows:
+
 - electron-pdf 25.0.x (master) => electron=25.4.0, node=16.15.0, chrome=114.0.5735.248
 - electron-pdf 20.0.x => electron=20.0.2, node=16.15.0, chrome=104.0.5112.81
 - electron-pdf 15.0.x => electron=15.1.1, node=16.5.0, chrome=94.0.4606.61
@@ -22,154 +46,149 @@ Semantic Versioning is used, and corresponds to electron versions in the followi
 - electron-pdf 1.3.x  =>  electron 1.6.x (Chromium 56, Node 7.4)
 - electron-pdf 1.2.x  =>  electron 1.4.x (Chromium 53, Node 6.5)
 
-Note: The Chromium versions employed by electron have impacts based on the functionality you may be exporting.  
-Choose the version you need based on Chromium.
+Please note that the choice of Chromium version affects the functionality you can utilize. Choose the version that aligns with your needs.
 
-Install
--------
+### Installation
 
-```
+Install Electron-PDF via npm:
+
+```bash
 npm install electron-pdf
 ```
 
-Note: If you're installing electron-pdf as root using the system level npm (vs a user-level install like with NVM) then you may need to run the following command instead:
+If you're installing as root using system-level npm (rather than a user-level install like with NVM), use the following command:
 
-```
+```bash
 sudo npm install electron-pdf -g --unsafe-perm
 ```
+
+For GNU/Linux installations without a graphical environment, you need to install xvfb and set up a virtual display:
+
+```bash
+sudo apt-get install xvfb # or equivalent
+export DISPLAY=':99.0'
+Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
+electron-pdf ...
+```
+
+A Docker machine example is available [here](https://github.com/fraserxu/docker-tape-run).
 
 Please see [the npm docs](https://docs.npmjs.com/misc/config#unsafe-perm) for more information.
 
 
-For gnu/linux installations without a graphical environment:
+### Node.js Usage
 
-```bash
-$ sudo apt-get install xvfb # or equivalent
-$ export DISPLAY=':99.0'
-$ Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
-$ electron-pdf ...
-```
+Electron-PDF can be integrated into your application or used as a rendering engine for a PDF service. Below are examples of usage.
 
-There is also an example docker machine [here](https://github.com/fraserxu/docker-tape-run).
+#### Application Setup
 
-Node Usage
------
-Electron PDF can be used inside of an application, or more commonly as the engine for a pdf 
-rendering service.  For instance, to handle http requests using Express.  The following snippets 
-show you how you can get started.
+In your `package.json`:
 
-### The application must run in an Electron process
-
-In `package.json`
 ```json
-"start": "DEBUG=electronpdf:* electron index.js",
-"watch": "DEBUG=electronpdf:* nodemon --exec electron index.js"
+"scripts": {
+  "start": "DEBUG=electronpdf:* electron index.js",
+  "watch": "DEBUG=electronpdf:* nodemon --exec electron index.js"
+}
 ```
 
-### You can use the same instance
+#### Using Electron-PDF
 
 ```javascript
-var ElectronPDF = require('electron-pdf')
-var express = require('express')
-var bodyParser = require('body-parser')
-var app = express()
-app.use(bodyParser.json())
+const ElectronPDF = require('electron-pdf');
+const express = require('express');
+const bodyParser = require('body-parser');
+const app = express();
+app.use(bodyParser.json());
 
-var exporter = new ElectronPDF()
+const exporter = new ElectronPDF();
 exporter.on('charged', () => {
-	//Only start the express server once the exporter is ready
-	app.listen(port, hostname, function() {
-		console.log(`Export Server running at http://${hostname}:${port}`);
-	})
-})
-exporter.start()
+  app.listen(port, hostname, () => {
+    console.log(`Export Server running at http://${hostname}:${port}`);
+  });
+});
+exporter.start();
 ```
 
-### And handle multiple export job instances
+#### Handling Multiple Export Jobs
 
 ```javascript
-app.post('/pdfexport', function(req,res){
-	// derive job arguments from request here
-	// 
-	const jobOptions = {
-	  /**
-	    r.results[] will contain the following based on inMemory
-          false: the fully qualified path to a PDF file on disk
-          true: The Buffer Object as returned by Electron
-	    
-	    Note: the default is false, this can not be set using the CLI
-	   */
-	  inMemory: false 
-	}
-	const options = {
-  		pageSize : "A4"
-	}
-	exporter.createJob(source, target, options, jobOptions).then( job => {
-	job.on('job-complete', (r) => {
-    		console.log('pdf files:', r.results)
-    		// Process the PDF file(s) here
-    	})
-    	job.render()
-	})	
-})
+app.post('/pdfexport', (req, res) => {
+  const jobOptions = {
+  /*
+    r.results[] will contain the following based on inMemory
+    false: the fully qualified path to a PDF file on disk
+    true: The Buffer Object as returned by Electron
+    Note: the default is false, this can not be set using the CLI
+  */
+    inMemory: false // Set inMemory to true for Buffer export
+  };
+  const options = {
+    pageSize: "A4"
+  };
+  
+  exporter.createJob(source, target, options, jobOptions).then(job => {
+    job.on('job-complete', r => {
+      console.log('pdf files:', r.results);
+      // Process the PDF file(s) here
+    });
+    job.render();
+  });
+});
 ```
 
-#### Using an in memory Buffer
+#### Using In-Memory Buffer
 
 If you set the `inMemory` setting to true, you must also set `closeWindow=false`
 or you will get a segmentation fault anytime the window is closed before the buffer 
 is sent on the response.  You then need to invoke `job.destroy` to close the window.
 
-Sample Code:
+
 ```javascript
-const jobOptions = { inMemory: true, closeWindow: false }
-exporter.createJob(source, target, options, jobOptions).then( job => {
-	job.on('job-complete', (r) => {
-	  //Send the Buffer here
-	  process.nextTick(() => {job.destroy()})
-	})
-})
+const jobOptions = { inMemory: true, closeWindow: false };
+exporter.createJob(source, target, options, jobOptions).then(job => {
+  job.on('job-complete', r => {
+    // Send the Buffer here
+    process.nextTick(() => { job.destroy(); });
+  });
+});
 ```
 
-## Events
+### Events
 
-The API is designed to emit noteworthy events rather than use callbacks.
-Full documentation of all events is a work in progress.
+Electron-PDF emits events to provide insights into its operations. A full documentation of events is a work in progress.
 
-## Environment Variables
+### Environment Variables
 
-- `ELECTRONPDF_RENDERER_MAX_MEMORY` : The --max-old-space-size option for each Electron renderer process (browser window); default: `75% of total system memory up to 8GB`
-- `ELECTRONPDF_WINDOW_CLEANUP_INTERVAL` : Interval for which to check for hung windows, in milliseconds; default: `30 seconds`
-- `ELECTRONPDF_WINDOW_LIFE_THRESHOLD` : How long a window can remain open before it is terminated, in milliseconds; default: `5 minutes`
-- `ELECTRONPDF_PNG_CAPTURE_DELAY` : Amount of millis to wait before invoking WebContents.capturePage for PNG exports; default: `100ms`
+- `ELECTRONPDF_RENDERER_MAX_MEMORY`: Specify the `--max-old-space-size` option for each Electron renderer process (browser window); default: `75% of total system memory up to 8GB`
+- `ELECTRONPDF_WINDOW_CLEANUP_INTERVAL`: Interval to check for hung windows, in milliseconds; default: `30 seconds`
+- `ELECTRONPDF_WINDOW_LIFE_THRESHOLD`: How long a window can remain open before it is terminated, in milliseconds; default: `5 minutes`
+- `ELECTRONPDF_PNG_CAPTURE_DELAY`: Delay before invoking `WebContents.capturePage` for PNG exports; default: `100ms`
 
+### Command Line Usage
 
-Command Line Usage
------
+Electron-PDF provides a versatile command-line interface (CLI) for various conversions and exports.
 
-For Ad-hoc conversions, Electron PDF comes with support for a CLI.
+#### Generate a PDF from an HTML file
 
-### To generate a PDF from a HTML file
-
-```
+```bash
 $ electron-pdf index.html ~/Desktop/index.pdf
 ```
 
-### To generate a PDF from a Markdown file
+#### Generate a PDF from a Markdown file
 
-```
+```bash
 $ electron-pdf index.md ~/Desktop/index.pdf
 ```
 
-### To generate a PDF from a Markdown file with custom CSS (defaults to Github markdown style)
+#### Generate a PDF from a Markdown file with custom CSS
 
-```
+```bash
 $ electron-pdf index.html ~/Desktop/index.pdf -c my-awesome-css.css
 ```
 
-### To generate a PDF from a URL
+#### Generate a PDF from a URL
 
-```
+```bash
 $ electron-pdf https://fraserxu.me ~/Desktop/fraserxu.pdf
 ```
 
@@ -352,7 +371,6 @@ For example: `DEBUG=electron* electron-pdf <input> <output> -l`
     $ electron-pdf ./index.html ~/Desktop/index.pdf
     $ electron-pdf ./README.md ~/Desktop/README.pdf -l
     $ electron-pdf ./README.md ~/Desktop/README.pdf -l -c my-awesome-css.css
-
 ```
 
 Inspired by [electron-mocha](https://github.com/jprichardson/electron-mocha)
@@ -367,7 +385,6 @@ Just set the output filename to end in .png or .html instead!
     $ electron-pdf http://fraserxu.me ~/Desktop/fraserxu.pdf
     $ electron-pdf http://fraserxu.me ~/Desktop/fraserxu.html
     $ electron-pdf http://fraserxu.me ~/Desktop/fraserxu.png
-
 ```
 
 ### Extensions
