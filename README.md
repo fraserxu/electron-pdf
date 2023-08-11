@@ -61,6 +61,7 @@ If you're installing as root using system-level npm (rather than a user-level in
 ```bash
 sudo npm install electron-pdf -g --unsafe-perm
 ```
+Please see [the npm docs](https://docs.npmjs.com/misc/config#unsafe-perm) for more information.
 
 For GNU/Linux installations without a graphical environment, you need to install xvfb and set up a virtual display:
 
@@ -72,9 +73,6 @@ electron-pdf ...
 ```
 
 A Docker machine example is available [here](https://github.com/fraserxu/docker-tape-run).
-
-Please see [the npm docs](https://docs.npmjs.com/misc/config#unsafe-perm) for more information.
-
 
 ### Node.js Usage
 
@@ -94,19 +92,19 @@ In your `package.json`:
 #### Using Electron-PDF
 
 ```javascript
-const ElectronPDF = require('electron-pdf');
-const express = require('express');
-const bodyParser = require('body-parser');
-const app = express();
-app.use(bodyParser.json());
+const ElectronPDF = require('electron-pdf')
+const express = require('express')
+const bodyParser = require('body-parser')
+const app = express()
+app.use(bodyParser.json())
 
-const exporter = new ElectronPDF();
+const exporter = new ElectronPDF()
 exporter.on('charged', () => {
   app.listen(port, hostname, () => {
-    console.log(`Export Server running at http://${hostname}:${port}`);
-  });
-});
-exporter.start();
+    console.log(`Export Server running at http://${hostname}:${port}`)
+  })
+})
+exporter.start()
 ```
 
 #### Handling Multiple Export Jobs
@@ -121,19 +119,19 @@ app.post('/pdfexport', (req, res) => {
     Note: the default is false, this can not be set using the CLI
   */
     inMemory: false // Set inMemory to true for Buffer export
-  };
+  }
   const options = {
     pageSize: "A4"
-  };
+  }
   
   exporter.createJob(source, target, options, jobOptions).then(job => {
     job.on('job-complete', r => {
-      console.log('pdf files:', r.results);
+      console.log('pdf files:', r.results)
       // Process the PDF file(s) here
-    });
-    job.render();
-  });
-});
+    })
+    job.render()
+  })
+})
 ```
 
 #### Using In-Memory Buffer
@@ -144,13 +142,13 @@ is sent on the response.  You then need to invoke `job.destroy` to close the win
 
 
 ```javascript
-const jobOptions = { inMemory: true, closeWindow: false };
+const jobOptions = { inMemory: true, closeWindow: false }
 exporter.createJob(source, target, options, jobOptions).then(job => {
   job.on('job-complete', r => {
     // Send the Buffer here
-    process.nextTick(() => { job.destroy(); });
-  });
-});
+    process.nextTick(() => { job.destroy() })
+  })
+})
 ```
 
 ### Events
@@ -159,10 +157,10 @@ Electron-PDF emits events to provide insights into its operations. A full docume
 
 ### Environment Variables
 
-- `ELECTRONPDF_RENDERER_MAX_MEMORY`: Specify the `--max-old-space-size` option for each Electron renderer process (browser window); default: `75% of total system memory up to 8GB`
-- `ELECTRONPDF_WINDOW_CLEANUP_INTERVAL`: Interval to check for hung windows, in milliseconds; default: `30 seconds`
-- `ELECTRONPDF_WINDOW_LIFE_THRESHOLD`: How long a window can remain open before it is terminated, in milliseconds; default: `5 minutes`
-- `ELECTRONPDF_PNG_CAPTURE_DELAY`: Delay before invoking `WebContents.capturePage` for PNG exports; default: `100ms`
+- `ELECTRONPDF_RENDERER_MAX_MEMORY`: Specify the `--max-old-space-size` option for each Electron renderer process (browser window) default: `75% of total system memory up to 8GB`
+- `ELECTRONPDF_WINDOW_CLEANUP_INTERVAL`: Interval to check for hung windows, in milliseconds default: `30 seconds`
+- `ELECTRONPDF_WINDOW_LIFE_THRESHOLD`: How long a window can remain open before it is terminated, in milliseconds default: `5 minutes`
+- `ELECTRONPDF_PNG_CAPTURE_DELAY`: Delay before invoking `WebContents.capturePage` for PNG exports default: `100ms`
 
 ### Command Line Usage
 
