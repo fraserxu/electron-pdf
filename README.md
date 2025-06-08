@@ -404,3 +404,5 @@ MIT
 [downloads-url]: https://npmjs.org/package/electron-pdf
 [standard-image]: https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat-square
 [standard-url]: https://github.com/feross/standard
+
+[![Powered by DartNode](https://dartnode.com/branding/DN-Open-Source-sm.png)](https://dartnode.com "Powered by DartNode - Free VPS for Open Source")
