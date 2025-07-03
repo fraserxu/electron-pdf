@@ -1,7 +1,6 @@
 ## Electron-PDF
 
 [![NPM version][npm-image]][npm-url]
-[![Build status][travis-image]][travis-url]
 [![Downloads][downloads-image]][downloads-url]
 [![js-standard-style][standard-image]][standard-url]
 
@@ -398,8 +397,6 @@ MIT
 
 [npm-image]: https://img.shields.io/npm/v/electron-pdf.svg?style=flat-square
 [npm-url]: https://npmjs.org/package/electron-pdf
-[travis-image]: https://img.shields.io/travis/fraserxu/electron-pdf/master.svg?style=flat-square
-[travis-url]: https://travis-ci.org/fraserxu/electron-pdf
 [downloads-image]: https://img.shields.io/npm/dm/electron-pdf.svg?style=flat-square
 [downloads-url]: https://npmjs.org/package/electron-pdf
 [standard-image]: https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat-square
