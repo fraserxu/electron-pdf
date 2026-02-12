@@ -36,6 +36,7 @@ Starting from version 4.0.x, the master branch of Electron-PDF will always align
 
 Semantic Versioning is followed, and the version numbers correspond to Electron versions as follows:
 
+- electron-pdf 40.1.x (master) => electron=40.1.0, node=24.11.1, chrome=144.0.7559.96
 - electron-pdf 25.0.x (master) => electron=25.4.0, node=16.15.0, chrome=114.0.5735.248
 - electron-pdf 20.0.x => electron=20.0.2, node=16.15.0, chrome=104.0.5112.81
 - electron-pdf 15.0.x => electron=15.1.1, node=16.5.0, chrome=94.0.4606.61
