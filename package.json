@@ -39,7 +39,7 @@
     "tap-diff": "^0.1.1",
     "tap-spec": "^5.0.0",
     "then-fs": "^2.0.0",
-    "validator": "^10.11.0"
+    "validator": "^13.7.0"
   },
   "dependencies": {
     "@sentry/electron": "^1.5.2",
