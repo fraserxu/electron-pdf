@@ -198,3 +198,34 @@ function setupCookieStub () {
     stub: cookieStub
   }
 }
+
+// Listener lifecycle
+
+/**
+ * A window.termination listener was registered for every resource, but it is
+ * only consumed if the window is actually terminated.  A multi resource export
+ * therefore added one listener per input and tripped eventemitter2's
+ * "possible EventEmitter memory leak detected" warning partway through.
+ */
+test('_executeJSListener does not accumulate window.termination listeners', t => {
+  const window = { webContents: { executeJavaScript: () => Promise.resolve() } }
+  const baseline = job.listenerCount('window.termination')
+
+  _.times(30, () => job._executeJSListener('ready', () => {}, () => {}, window))
+
+  t.is(job.listenerCount('window.termination'), baseline,
+    'a 30 resource export must not leave 30 listeners behind')
+  job._clearReadyEventTimeout()
+})
+
+test('_executeJSListener keeps only one ready event timeout pending', t => {
+  const window = { webContents: { executeJavaScript: () => Promise.resolve() } }
+
+  job._executeJSListener('ready', () => {}, () => {}, window)
+  const first = job._readyEventTimeout
+  job._executeJSListener('ready', () => {}, () => {}, window)
+
+  t.not(job._readyEventTimeout, first, 'each resource gets a fresh timeout')
+  job._clearReadyEventTimeout()
+  t.is(job._readyEventTimeout, null)
+})
